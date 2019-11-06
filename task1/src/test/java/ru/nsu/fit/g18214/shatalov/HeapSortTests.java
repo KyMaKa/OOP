@@ -13,15 +13,27 @@ public class HeapSortTests {
         HeapSort gen = new HeapSort();
         Assert.assertArrayEquals(
                 new int[] {1, 2, 3, 4, 5},
-                gen.getAnswer(new int[] {5, 4, 3, 2, 1}));
+                gen.sort(new int[] {5, 4, 3, 2, 1}));
         Assert.assertArrayEquals(
                 new int[] {-100, -1, 1, 2, 2, 3, 4},
-                gen.getAnswer(new int[] {1, 2, -100, -1, 3, 4, 2,}));
+                gen.sort(new int[] {1, 2, -100, -1, 3, 4, 2,}));
         Assert.assertArrayEquals(
                 new int[] {-1, -1, -1, -1},
-                gen.getAnswer(new int[] {-1, -1, -1, -1}));
+                gen.sort(new int[] {-1, -1, -1, -1}));
         Assert.assertArrayEquals(
                 new int[] {1},
-                gen.getAnswer(new int[] {1}));
+                gen.sort(new int[] {1}));
+        Assert.assertArrayEquals(
+                new int [] {},
+                gen.sort(new int[] {}));
+        Assert.assertArrayEquals(
+                null,
+                gen.sort(null));
+        Assert.assertArrayEquals(
+                new int [] {1,2,3,4},
+                gen.sort(new int[] {1,2,3,4}));
+        Assert.assertArrayEquals(
+                new int [] {-1,-1,1},
+                gen.sort(new int[] {-1,1,-1}));
     }
 }

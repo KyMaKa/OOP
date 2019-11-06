@@ -4,8 +4,14 @@
 package ru.nsu.fit.g18214.shatalov;
 
 public class HeapSort {
-    public void sort(int arr[])
+
+     /** Passed array will be sorted and changed **/
+
+    public int[] sort(int arr[])
     {
+        if (arr == null)
+            return null;
+
         int n = arr.length;
 
         for (int i = n / 2 - 1; i >= 0; i--)
@@ -19,10 +25,11 @@ public class HeapSort {
 
             heapify(arr, i, 0);
         }
+        return arr;
     }
 
 
-    void heapify(int arr[], int n, int i)
+    private void heapify(int arr[], int n, int i)
     {
         int largest = i;
         int l = 2*i + 1;
@@ -43,18 +50,5 @@ public class HeapSort {
 
             heapify(arr, n, largest);
         }
-    }
-
-    public int[] getAnswer(int a[]){
-        sort(a);
-        return a;
-    }
-
-    public static void  main(String[] args){
-        int arr[] = {1, 2, 3, 4, 5};
-        HeapSort gen = new HeapSort();
-        gen.getAnswer(arr);
-        for (int i = 0; i < arr.length; i++)
-            System.out.println(arr[i]);
     }
 }

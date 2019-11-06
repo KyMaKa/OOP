@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e8b86646-63b9-458c-a927-c8dae3365af0" name="Default Changelist" comment="" />
+    <list default="true" id="e8b86646-63b9-458c-a927-c8dae3365af0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Task_1_3/.idea/dictionaries/seaft.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Task_1_3/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Task_1_3/src/main/resources/testFile_1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/main/java/ru/nsu/fit/g18214/shatalov/FindSubstring.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/main/java/ru/nsu/fit/g18214/shatalov/FindSubstring.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/main/resources/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/main/resources/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/test/java/ru/nsu/fit/g18214/shatalov/FindSubstringTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/test/java/ru/nsu/fit/g18214/shatalov/FindSubstringTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,12 +25,23 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="ProjectId" id="1RgRlrhcDbdp091ckXzVqIvVuwT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -85,10 +108,22 @@
       <updated>1570086906798</updated>
       <workItem from="1570086910357" duration="513000" />
       <workItem from="1570627107656" duration="3210000" />
+      <workItem from="1573037235457" duration="3389000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
