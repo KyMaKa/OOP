@@ -3,9 +3,17 @@
  */
 package ru.nsu.fit.g18214.shatalov;
 
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.IOException;
 
 public class FindSubstringTest {
-
+    @Test
+    public void test() throws IOException {
+        FindSubstring gen = new FindSubstring();
+        Assert.assertArrayEquals(
+                new Integer[] {7},
+                gen.findIndex("пирог", "src/main/resources/input.txt"));
+    }
 }

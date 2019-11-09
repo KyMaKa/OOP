@@ -8,25 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindSubstring {
-    public static String[] read(String filename) throws IOException {
-        FileReader fileReader = new FileReader(filename);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+    private static String[] read(String filename) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(filename),
+                "UTF-8"));
 
         List<String> lines = new ArrayList<String>();
         String line = null;
 
         while ((line = bufferedReader.readLine()) != null) {
             lines.add(line);
+            System.out.println(line.length());
         }
 
         bufferedReader.close();
+
         return lines.toArray(new String[lines.size()]);
     }
 
-    public static Integer[] indexIn(String substring) throws IOException {
+    public Integer[] findIndex(String substring, String filename) throws IOException {
 
-        FindSubstring fs = new FindSubstring();
-        String[] lines = fs.read("src/main/resources/input.txt");
+        String[] lines = FindSubstring.read(filename);
 
         ArrayList<Integer> index = new ArrayList<>();
 
@@ -50,8 +52,14 @@ public class FindSubstring {
         FindSubstring fs = new FindSubstring();
 
         Integer[] arr;
-        arr = fs.indexIn("me");
-
+        String[] str = fs.read("src/main/resources/input.txt");
+        arr = fs.findIndex("пирог", "src/main/resources/input.txt");
+        String t = "пирог";
+        System.out.println(t.length());
+        for (int i = 0; i < str.length; i++)
+            System.out.print(str[i]);
+        System.out.println();
+        System.out.println(str.length);
         System.out.print("{");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]);
