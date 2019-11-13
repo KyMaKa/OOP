@@ -14,6 +14,42 @@ public class FindSubstringTest {
         FindSubstring gen = new FindSubstring();
         Assert.assertArrayEquals(
                 new Integer[] {7},
-                gen.findIndex("пирог", "src/main/resources/input.txt"));
+                gen.findIndex("пирог",
+                        "src/main/resources/input.txt"));
+        Assert.assertArrayEquals(
+                new Integer[] {},
+                gen.findIndex("пирог",
+                        "src/main/resources/testFile_1.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {3},
+                gen.findIndex("родился",
+                        "src/main/resources/testFile_2.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {0},
+                gen.findIndex("Ты",
+                        "src/main/resources/testFile_2.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {5828},
+                gen.findIndex("Nathalie",
+                        "src/main/resources/testFile_3.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {2416, 2643, 4259, 5428, 5675, 5857, 6339, 7231},
+                gen.findIndex("Я",
+                        "src/main/resources/testFile_3.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {},
+                gen.findIndex("дурак",
+                        "src/main/resources/testFile_3.txt")
+        );
+        Assert.assertArrayEquals(
+                new Integer[] {3043},
+                gen.findIndex("madame de Genlis",
+                        "src/main/resources/testFile_3.txt")
+        );
     }
 }
