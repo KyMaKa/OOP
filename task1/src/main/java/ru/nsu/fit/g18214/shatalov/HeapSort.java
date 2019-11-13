@@ -5,12 +5,12 @@ package ru.nsu.fit.g18214.shatalov;
 
 public class HeapSort {
 
-     /** Passed array will be sorted and changed **/
+     /** @param arr will be sorted in place  **/
 
-    public int[] sort(int arr[])
+    public void sort(int[] arr)
     {
         if (arr == null)
-            return null;
+            return;
 
         int n = arr.length;
 
@@ -25,11 +25,10 @@ public class HeapSort {
 
             heapify(arr, i, 0);
         }
-        return arr;
     }
 
 
-    private void heapify(int arr[], int n, int i)
+    private void heapify(int[] arr, int n, int i)
     {
         int largest = i;
         int l = 2*i + 1;

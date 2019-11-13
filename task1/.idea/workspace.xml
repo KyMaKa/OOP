@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e8b86646-63b9-458c-a927-c8dae3365af0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Task_1_3/.idea/dictionaries/seaft.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Task_1_3/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Task_1_3/src/main/resources/testFile_1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/main/java/ru/nsu/fit/g18214/shatalov/FindSubstring.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/main/java/ru/nsu/fit/g18214/shatalov/FindSubstring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/main/resources/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/main/resources/input.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Task_1_3/src/test/java/ru/nsu/fit/g18214/shatalov/FindSubstringTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Task_1_3/src/test/java/ru/nsu/fit/g18214/shatalov/FindSubstringTest.java" afterDir="false" />
+    <list default="true" id="e8b86646-63b9-458c-a927-c8dae3365af0" name="Default Changelist" comment="Little changes was applied.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" afterDir="false" />
@@ -108,7 +100,8 @@
       <updated>1570086906798</updated>
       <workItem from="1570086910357" duration="513000" />
       <workItem from="1570627107656" duration="3210000" />
-      <workItem from="1573037235457" duration="3389000" />
+      <workItem from="1573037235457" duration="3747000" />
+      <workItem from="1573639777952" duration="2436000" />
     </task>
     <servers />
   </component>
@@ -120,10 +113,16 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Little changes was applied." />
+    <option name="LAST_COMMIT_MESSAGE" value="Little changes was applied." />
   </component>
 </project>
