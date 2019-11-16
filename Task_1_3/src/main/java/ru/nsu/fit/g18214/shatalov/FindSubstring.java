@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindSubstring {
+    /**
+     *
+     * @param filename contains path to file starting from folder src
+     * @return array with text from file
+     */
     private String[] read(String filename) throws IOException {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(filename),
@@ -25,6 +30,13 @@ public class FindSubstring {
         return lines.toArray(new String[lines.size()]);
     }
 
+    /**
+     *
+     * @param substring contains substring that we need to find in text
+     * @param filename  contains path to file starting from folder src
+     * @return array filed with indexes of all occurrences for given substring
+     * @throws IOException if there is no such file
+     */
     public Integer[] findIndex(String substring, String filename) throws IOException {
         FindSubstring fs = new FindSubstring();
         String[] lines = fs.read(filename);
