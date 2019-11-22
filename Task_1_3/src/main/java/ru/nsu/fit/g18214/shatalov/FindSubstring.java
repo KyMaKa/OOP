@@ -12,6 +12,7 @@ public class FindSubstring {
      *
      * @param filename contains path to file starting from folder src
      * @return array with text from file
+     * @throws IOException if file inaccessible
      */
     private String[] read(String filename) throws IOException {
 
