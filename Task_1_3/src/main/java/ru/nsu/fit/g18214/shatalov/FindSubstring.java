@@ -16,8 +16,9 @@ public class FindSubstring {
      */
     private String[] read(String filename) throws IOException {
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(filename),
-                "UTF-8"));
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(filename),
+                        "UTF-8"));
 
         List<String> lines = new ArrayList<String>();
         String line = null;
@@ -39,8 +40,8 @@ public class FindSubstring {
      * @throws IOException if there is no such file
      */
     public Integer[] findIndex(String substring, String filename) throws IOException {
-        FindSubstring fs = new FindSubstring();
-        String[] lines = fs.read(filename);
+
+        String[] lines = read(filename);
 
         ArrayList<Integer> index = new ArrayList<>();
 
