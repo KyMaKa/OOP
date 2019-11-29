@@ -8,49 +8,60 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class HeapSortTests {
+    HeapSort gen = new HeapSort();
+    int[] arr = {5, 3, 4, 2, 1};
     @Test
-    public void test(){
-        HeapSort gen = new HeapSort();
+    public void testPositive() {
 
-        int[] arr = {5,3,4,2,1};
+        int[] arr = {5, 3, 4, 2, 1};
         gen.sort(arr);
         Assert.assertArrayEquals(
-                new int[] {1, 2, 3, 4, 5},
-                arr);
-        arr = new int[] {-1, 1, 2, 3, 4, 2, -100};
-        gen.sort(arr);
-        Assert.assertArrayEquals(
-                new int[] {-100, -1, 1, 2, 2, 3, 4},
-                arr);
-        arr = new int[] {-1, -1, -1, -1};
-        gen.sort(arr);
-        Assert.assertArrayEquals(
-                new int[] {-1, -1, -1, -1},
-                arr);
-        arr = new int[] {1};
-        gen.sort(arr);
-        Assert.assertArrayEquals(
-                new int[] {1},
-                arr);
-        arr = new int[] {};
-        gen.sort(arr);
-        Assert.assertArrayEquals(
-                new int [] {},
-                arr);
-        arr = null;
-        gen.sort(arr);
-        Assert.assertArrayEquals(
-                null,
+                new int[]{1, 2, 3, 4, 5},
                 arr);
         arr = new int[] {3, 2, 1, 4};
         gen.sort(arr);
         Assert.assertArrayEquals(
                 new int [] {1,2,3,4},
                 arr);
+    }
+    @Test
+    public void testNegative() {
+        arr = new int[]{-1, 1, 2, 3, 4, 2, -100};
+        gen.sort(arr);
+        Assert.assertArrayEquals(
+                new int[]{-100, -1, 1, 2, 2, 3, 4},
+                arr);
+
         arr = new int[] {-1, 1, -1};
         gen.sort(arr);
         Assert.assertArrayEquals(
                 new int [] {-1,-1,1},
+                arr);
+    }
+    @Test
+    public void testSame() {
+        arr = new int[]{-1, -1, -1, -1};
+        gen.sort(arr);
+        Assert.assertArrayEquals(
+                new int[]{-1, -1, -1, -1},
+                arr);
+        arr = new int[]{1};
+        gen.sort(arr);
+        Assert.assertArrayEquals(
+                new int[]{1},
+                arr);
+    }
+    @Test
+    public void testEmpty() {
+        arr = new int[]{};
+        gen.sort(arr);
+        Assert.assertArrayEquals(
+                new int[]{},
+                arr);
+        arr = null;
+        gen.sort(arr);
+        Assert.assertArrayEquals(
+                null,
                 arr);
     }
 }

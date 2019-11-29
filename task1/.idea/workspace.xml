@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8b86646-63b9-458c-a927-c8dae3365af0" name="Default Changelist" comment="Little changes was applied.">
+      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/g18214/shatalov/HeapSort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/fit/g18214/shatalov/HeapSortTests.java" afterDir="false" />
@@ -32,8 +33,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="last_opened_file_path" value="$USER_HOME$/google_checks.xml" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -102,6 +103,8 @@
       <workItem from="1570627107656" duration="3210000" />
       <workItem from="1573037235457" duration="3747000" />
       <workItem from="1573639777952" duration="2436000" />
+      <workItem from="1575015188096" duration="499000" />
+      <workItem from="1575015886609" duration="2387000" />
     </task>
     <servers />
   </component>
