@@ -16,30 +16,30 @@ public class FindSubstringTest {
     Assert.assertArrayEquals(
         new Integer[]{7},
         gen.readAndFind("пирог",
-            "src/main/resources/input.txt"));
+            "src/test/resources/input.txt"));
 
     Assert.assertArrayEquals(
         new Integer[]{3},
         gen.readAndFind("родился",
-            "src/main/resources/testFile_2.txt")
+            "src/test/resources/testFile_2.txt")
     );
 
     Assert.assertArrayEquals(
         new Integer[]{0},
         gen.readAndFind("Ты",
-            "src/main/resources/testFile_2.txt")
+            "src/test/resources/testFile_2.txt")
     );
 
     Assert.assertArrayEquals(
         new Integer[]{5828},
         gen.readAndFind("Nathalie",
-            "src/main/resources/testFile_3.txt")
+            "src/test/resources/testFile_3.txt")
     );
 
     Assert.assertArrayEquals(
         new Integer[] {3043},
         gen.readAndFind("madame de Genlis",
-            "src/main/resources/testFile_3.txt")
+            "src/test/resources/testFile_3.txt")
     );
   }
 
@@ -49,7 +49,7 @@ public class FindSubstringTest {
     Assert.assertArrayEquals(
         new Integer[]{2416, 2643, 4259, 5428, 5675, 5857, 6339, 7231},
         gen.readAndFind("Я",
-            "src/main/resources/testFile_3.txt")
+            "src/test/resources/testFile_3.txt")
     );
   }
 
@@ -59,13 +59,13 @@ public class FindSubstringTest {
     Assert.assertArrayEquals(
         new Integer[] {},
         gen.readAndFind("дурак",
-            "src/main/resources/testFile_3.txt")
+            "src/test/resources/testFile_3.txt")
     );
 
     Assert.assertArrayEquals(
         new Integer[]{},
         gen.readAndFind("пирог",
-            "src/main/resources/testFile_1.txt")
+            "src/test/resources/testFile_1.txt")
     );
   }
 
