@@ -6,8 +6,9 @@ package ru.nsu.fit.g18214.shatalov;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class FindSubstring {
@@ -20,8 +21,11 @@ public class FindSubstring {
    */
   public Integer[] readAndFind(String substring, String filename) throws IOException {
     File source = new File(filename);
-    FileReader fr = new FileReader(source);
-    BufferedReader br = new BufferedReader(fr);
+    BufferedReader br = new BufferedReader(
+        new InputStreamReader(
+            new FileInputStream(source), "UTF8"
+        )
+    );
     ArrayList<Integer> index = new ArrayList<>();
     int count = 0;
     int hlp = 0;
