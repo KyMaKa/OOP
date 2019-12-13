@@ -6,24 +6,25 @@ package ru.nsu.fit.g18214.shatalov;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class FindSubstring {
   /**
    * Opens and reads file character by character and finds all occurrences of given substring.
    * @param substring accepts String
-   * @param filename accepts path to file (starts from src/)
+   * @param filename accepts path to file (local or from internet)
    * @return Integer array indexes of all occurrences of given substring
    * @throws IOException if there is no such file
    */
   public Integer[] readAndFind(String substring, String filename) throws IOException {
     File source = new File(filename);
+    URL url = source.toURI().toURL();
     BufferedReader br = new BufferedReader(
         new InputStreamReader(
-            new FileInputStream(source), "UTF8"
+            new URL(url.toString()).openStream(), "UTF8"
         )
     );
     ArrayList<Integer> index = new ArrayList<>();
@@ -33,6 +34,7 @@ public class FindSubstring {
     while ((hlp = br.read()) != -1) {
       char current = (char) hlp;
       int i = 0;
+      br.mark(substring.length());
       while (sub[i] == current) {
         i++;
         if (i < sub.length) {
@@ -42,16 +44,11 @@ public class FindSubstring {
           break;
         }
       }
+      br.reset();
       if (i == sub.length) {
         index.add(count);
-        count += sub.length;
-      } else {
-        if (i != 0) {
-          count += i;
-        } else {
-          count++;
-        }
       }
+      count++;
     }
     Integer[] arr = index.toArray(new Integer[index.size()]);
     return arr;

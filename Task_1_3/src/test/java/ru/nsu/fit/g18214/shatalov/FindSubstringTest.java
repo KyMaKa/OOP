@@ -51,6 +51,11 @@ public class FindSubstringTest {
         gen.readAndFind("Я",
             "src/test/resources/testFile_3.txt")
     );
+    Assert.assertArrayEquals(
+        new Integer[] {0,4},
+        gen.readAndFind("abac",
+            "src/test/resources/testFile_4.txt")
+    );
   }
 
   @Test
