@@ -4,10 +4,8 @@
 
 package ru.nsu.fit.g18214.shatalov;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.xml.transform.Source;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -20,13 +18,22 @@ public class FindSubstring {
    * @throws IOException if there is no such file
    */
   public Integer[] readAndFind(String substring, String filename) throws IOException {
-    File source = new File(filename);
-    URL url = source.toURI().toURL();
-    BufferedReader br = new BufferedReader(
-        new InputStreamReader(
-            new URL(url.toString()).openStream(), "UTF8"
-        )
-    );
+
+    BufferedReader br;
+    if (filename.contains("http")) {
+
+      br = new BufferedReader(
+              new InputStreamReader(
+                      new URL(filename).openStream(), "UTF8"
+              )
+      );
+    } else {
+      br = new BufferedReader(
+              new InputStreamReader(
+                      new FileInputStream(filename), "UTF8"
+              )
+      );
+    }
     ArrayList<Integer> index = new ArrayList<>();
     int count = 0;
     int hlp = 0;

@@ -73,5 +73,13 @@ public class FindSubstringTest {
             "src/test/resources/testFile_1.txt")
     );
   }
+  @Test
+  public void testInternet() throws IOException{
+    FindSubstring gen = new FindSubstring();
+    Assert.assertArrayEquals(
+            new Integer[] {0},
+            gen.readAndFind("The", "https://www.w3.org/TR/PNG/iso_8859-1.txt")
+    );
+  }
 
 }
