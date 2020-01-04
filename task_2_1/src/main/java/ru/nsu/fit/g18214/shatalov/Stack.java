@@ -1,29 +1,39 @@
 package ru.nsu.fit.g18214.shatalov;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Stack {
-  List<Object> stack = new ArrayList<>();
+public class Stack<T> {
+  private StackElement<T> elemOfStack = null;
+  private StackElement<T> head = null;
   Integer size = 0; //number of elements in stack
 
-  public void push(Object item) {
-    stack.add(item);
+  public void push(T item) {
     size++;
+    if (elemOfStack == null) {
+      elemOfStack = new StackElement<>(item, null);
+      head = elemOfStack;
+    } else {
+      elemOfStack = new StackElement<>(item, elemOfStack);
+    }
   }
 
   /**
    * Take element from stack.
    * @return taken element
    */
-  public Object pop() {
+  public T pop() {
     if (size == 0) {
       throw new NoSuchElementException("Stack is empty");
     }
-    Object elem = stack.get(size - 1);
-    stack.remove(size - 1);
+    T elem = elemOfStack.getElement();
+    elemOfStack = elemOfStack.getPredE();
+    if (elemOfStack != null) {
+      elemOfStack.setNextE(null);
+    }
     size--;
+    if (size == 0) {
+      head = null;
+    }
     return elem;
   }
 

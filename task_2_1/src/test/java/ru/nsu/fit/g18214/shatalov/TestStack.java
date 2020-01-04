@@ -6,7 +6,7 @@ import org.junit.Test;
 public class TestStack {
   @Test
   public void test_int(){
-    Stack stack = new Stack();
+    Stack<Integer> stack = new Stack<Integer>();
     stack.push(1);
     stack.push(2);
     stack.push(13);
@@ -18,7 +18,7 @@ public class TestStack {
 
   @Test
   public void test_string(){
-    Stack stack = new Stack();
+    Stack<String> stack = new Stack<String>();
     stack.push("Abc");
     stack.push("Cba");
     stack.push("qwerty");
@@ -30,7 +30,7 @@ public class TestStack {
 
   @Test
   public void test_diff(){
-    Stack stack = new Stack();
+    Stack<java.io.Serializable> stack = new Stack<>();
     stack.push(3);
     stack.push("asd");
     stack.push('a');
