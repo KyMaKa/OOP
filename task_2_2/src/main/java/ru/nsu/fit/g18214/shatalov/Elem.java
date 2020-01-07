@@ -31,15 +31,4 @@ class Elem<O, K> {
   Elem<O, K> getNextElem() {
     return nextElem;
   }
-
-  Elem<O, K> createNextElem(K k, O next) {
-    if (nextElem == null) {
-      nextElem = new Elem<O, K>(k, next, this);
-    } else {
-      Elem<O, K> savedNext = nextElem;
-      nextElem = new Elem<O, K>(k, next, this);
-      nextElem.nextElem = savedNext;
-    }
-    return nextElem;
-  }
 }
