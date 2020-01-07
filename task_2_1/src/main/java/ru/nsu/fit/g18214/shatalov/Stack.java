@@ -1,17 +1,21 @@
 package ru.nsu.fit.g18214.shatalov;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Stack<T> {
+public class Stack<T> implements Iterable<T> {
   private StackElement<T> elemOfStack = null;
-  private StackElement<T> head = null;
+  /*private StackElement<T> head = null;*/
   Integer size = 0; //number of elements in stack
 
   public void push(T item) {
+    if (item == null) {
+      return;
+    }
     size++;
     if (elemOfStack == null) {
       elemOfStack = new StackElement<>(item, null);
-      head = elemOfStack;
+      //head = elemOfStack;
     } else {
       elemOfStack = new StackElement<>(item, elemOfStack);
     }
@@ -32,7 +36,7 @@ public class Stack<T> {
     }
     size--;
     if (size == 0) {
-      head = null;
+      elemOfStack = null;
     }
     return elem;
   }
@@ -43,5 +47,24 @@ public class Stack<T> {
    */
   public Integer count() {
     return size;
+  }
+
+  public Iterator<T> iterator() {
+    return new Iterator<T>() {
+      private StackElement<T> current = elemOfStack;
+
+      public boolean hasNext() {
+        return current != null;
+      }
+
+      public T next() throws IndexOutOfBoundsException {
+        if (current == null) {
+          throw new IndexOutOfBoundsException("End of stack.");
+        }
+        T result = current.getElement();
+        current = current.getPredE();
+        return result;
+      }
+    };
   }
 }
