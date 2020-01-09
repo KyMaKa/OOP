@@ -4,21 +4,6 @@ import java.security.InvalidParameterException;
 
 public class Calendar {
 
-/*
-  public static final int January = 1;
-  public static final int February = 2;
-  public static final int March = 3;
-  public static final int April = 4;
-  public static final int May = 5;
-  public static final int June = 6;
-  public static final int July = 7;
-  public static final int August = 8;
-  public static final int September = 9;
-  public static final int October = 10;
-  public static final int November = 11;
-  public static final int December = 12;
-*/
-
   public static final String[] Month = {
       "January", "February",
       "March", "April",
@@ -28,6 +13,11 @@ public class Calendar {
       "November", "December"
   };
 
+  /**
+   * Calculate type of year (Leap of default).
+   * @param year - decimal representation of year.
+   * @return string that says type of year.
+   */
   public String yearType(int year){
     if (year % 4 != 0) {
       return "default";
@@ -40,6 +30,13 @@ public class Calendar {
     }
   }
 
+  /**
+   * Calculate what day of week will be or was on given date.
+   * @param day - decimal number of day in mouth.
+   * @param month - decimal number of month in year.
+   * @param year - decimal representation of year.
+   * @return string with name of day of week.
+   */
   public String weekday(int day, int month, int year) {
     String dayName;
     if (month < 3) {
@@ -76,6 +73,15 @@ public class Calendar {
     return dayName;
   }
 
+  /**
+   * Calculate what day will be after given number of days passed.
+   * @param day - decimal number of day in mouth.
+   * @param month - decimal number of month in year.
+   * @param year - decimal representation of year.
+   * @param dayPassed - number of days passed since given date.
+   * @param whatReturn - accepts string with what type of information method will return. (month, year, date, dayName)
+   * @return string with name of month, year, full date or name of the day in week.
+   */
   public String whatDayWillBe(int day, int month, int year, int dayPassed, String whatReturn) {
     int febDays;
     if (yearType(year) == "leap") {
@@ -119,10 +125,10 @@ public class Calendar {
         return weekday(day, month, year);
       } else {
         if (whatReturn == "month") {
-          return Month[month];
+          return Month[month - 1];
         } else {
           if (whatReturn == "year") {
-            return Month[year];
+            return "" + year;
           } else {
             throw new InvalidParameterException("Invalid return parameter");
           }
@@ -131,6 +137,19 @@ public class Calendar {
     }
   }
 
+  /**
+   * Calculate number of days or days, months and year between two dates.
+   * @param day1 - decimal number of day in mouth.
+   * @param month1 - decimal number of month in year.
+   * @param year1 - decimal representation of year.
+   * @param day2 - decimal number of day in mouth.
+   * @param month2 - decimal number of month in year.
+   * @param year2 - decimal representation of year.
+   * First three parameters (day1, month1, year1) its a date before ->
+   * -> date of second three parameters (day2, month2, year2)
+   * @param whatReturn - accepts string with what type of information method will return. (date, day)
+   * @return string with number of days between two dates or number of days, months and years between two dates.
+   */
   public String differenceDate(int day1, int month1, int year1, int day2, int month2, int year2, String whatReturn) {
     int febDays;
     int dayPassed = 0;
@@ -185,6 +204,15 @@ public class Calendar {
     }
   }
 
+  /**
+   * Calculates nearest date with given number of day in month and name of day in week.
+   * @param day1 - decimal number of day in mouth.
+   * @param month1 - decimal number of month in year.
+   * @param year1 - decimal representation of year.
+   * @param day2 - number of day in month for search.
+   * @param dayName - name of the day of week.
+   * @return full date.
+   */
   public String whenFirst(int day1, int month1, int year1, int day2, String dayName) {
     int febDays;
     /* int daysB = 0, monthsB = 0, yearsB = 0;*/

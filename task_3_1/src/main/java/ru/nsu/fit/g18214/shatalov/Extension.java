@@ -14,7 +14,7 @@ public class Extension {
   }
 
   public String monthName(int day, int month, int year) {
-    return gen.Month[month];
+    return Calendar.Month[month - 1];
   }
 
   public String whatDayWillBe(int day, int month, int year, int daysPassed) {
@@ -46,15 +46,10 @@ public class Extension {
   }
 
   public String whatDayWillBeWeeks(int day, int month, int year, int weeksPassed) {
-    return gen.whatDayWillBe(day, month, year, weeksPassed * 7, "day");
+    return gen.whatDayWillBe(day, month, year, weeksPassed * 7, "dayName");
   }
 
   public String findNearest(int day, int month, int year, int dayToFind, String dayToFindName) {
     return gen.whenFirst(day, month, year, dayToFind, dayToFindName);
-  }
-
-  public static void main(String[] args) {
-    Extension ex = new Extension();
-    System.out.println(ex.findNearest(3, 1, 2020, 13, "Friday"));
   }
 }
