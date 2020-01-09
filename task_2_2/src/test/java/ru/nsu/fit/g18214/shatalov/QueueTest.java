@@ -6,6 +6,14 @@ import org.junit.Test;
 import java.util.Iterator;
 
 public class QueueTest {
+  @Test
+  public void testSingle() {
+    Queue<Integer, Integer> q = new Queue<>();
+    q.insert(1,1);
+    Assert.assertEquals(1, q.size());
+    Assert.assertEquals((Object) 1, q.extractMax());
+    Assert.assertEquals(0, q.size());
+  }
 
   @Test
   public void testString(){
@@ -52,7 +60,7 @@ public class QueueTest {
     q.insert(20, null);
     q.insert(null, 20);
     q.insert(null,null);
-    Assert.assertTrue(q.empty());
+    Assert.assertTrue(q.size() == 0);
   }
   @Test
   public void iteratorTest() {

@@ -7,31 +7,40 @@ public class Queue<K extends Comparable<K>, O> {
   private Elem<O, K> head = null;
   private int queueSize = 0;
 
+  /**
+   * .
+   * @return size (number) of elements in queue
+   */
   public int size() {
     return queueSize;
   }
 
-  public boolean empty(){
-    return queueSize == 0;
-  }
-
+  /**
+   * Insert new element in queue according to given key.
+   * key.head < key.tail.
+   * Every object must have key != null.
+   * @param key - comparable object that define position in queue.
+   * @param obj - object to be stored in queue.
+   */
   public void insert(K key, O obj) {
-    if (obj == null || key == null) return;
+    if (obj == null || key == null) {
+      return;
+    }
     if (head == null) {
-      head = new Elem<O, K>(key, obj, null);
+      head = new Elem<>(key, obj, null);
       tail = head;
       queueSize++;
       return;
     }
     if (key.compareTo(head.key) <= 0) { //key <= head.key
-      Elem<O, K> newHead = new Elem<O, K>(key, obj, null);
+      Elem<O, K> newHead = new Elem<>(key, obj, null);
       newHead.addNextElem(head);
       head = newHead;
       queueSize++;
       return;
     }
     if (key.compareTo(tail.key) > 0) {  //key > tail.key
-      Elem<O, K> newTail = new Elem<O, K>(key, obj, tail);
+      Elem<O, K> newTail = new Elem<>(key, obj, tail);
       tail.addNextElem(newTail);
       tail = newTail;
       queueSize++;
@@ -39,7 +48,7 @@ public class Queue<K extends Comparable<K>, O> {
     }
     // if new element somewhere between
     Elem<O, K> newElemPlace = head;
-    for (int i = 0; i < queueSize - 1; ++i) {
+    for (int i = 0; i < queueSize; ++i) {
       K headKey = newElemPlace.key;
       K tailKey = newElemPlace.getNextElem().key;
       if (headKey.compareTo(key) <= 0 && tailKey.compareTo(key) >= 0) {
@@ -54,10 +63,14 @@ public class Queue<K extends Comparable<K>, O> {
     }
   }
 
-
+  /**
+   * Extracts element with maximal key.
+   * @return element with maximal key.
+   * @throws IndexOutOfBoundsException if queue is empty.
+   */
   public O extractMax() throws IndexOutOfBoundsException {
     queueSize--;
-    if (tail!= null && tail == head){
+    if (tail != null && tail == head) {
       Elem<O, K> maxElem = tail;
       tail = null;
       head = null;
@@ -65,8 +78,6 @@ public class Queue<K extends Comparable<K>, O> {
     }
     if (tail != null) {
       Elem<O, K> maxElem = tail;
-      if (tail.getPreElem() == null)
-        throw new IndexOutOfBoundsException("Out of Bound.");
       tail = tail.getPreElem();
       tail.addNextElem(null);
       return maxElem.getElem();
@@ -75,10 +86,14 @@ public class Queue<K extends Comparable<K>, O> {
     }
   }
 
-
-  public O extractMin() {
+  /**
+   * Extracts from queue element with minimal key.
+   * @return element with minimal key.
+   * @throws IndexOutOfBoundsException if queue is empty.
+   */
+  public O extractMin() throws IndexOutOfBoundsException {
     queueSize--;
-    if (tail!= null && tail == head){
+    if (tail != null && tail == head) {
       Elem<O, K> minElem = tail;
       tail = null;
       head = null;
@@ -93,6 +108,10 @@ public class Queue<K extends Comparable<K>, O> {
     }
   }
 
+  /**
+   * Implementation of iterator for this queue.
+   * @return Iterator.
+   */
   public Iterator<O> iterator() {
     return new Iterator<O>() {
       private Elem<O, K> current = head;
