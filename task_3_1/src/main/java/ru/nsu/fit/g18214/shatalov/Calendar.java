@@ -4,7 +4,7 @@ import java.security.InvalidParameterException;
 
 public class Calendar {
 
-  public static final String[] Month = {
+  protected static final String[] Month = {
       "January", "February",
       "March", "April",
       "May", "June",
@@ -12,13 +12,13 @@ public class Calendar {
       "September", "October",
       "November", "December"
   };
-
+  int febDays;
   /**
    * Calculate type of year (Leap of default).
    * @param year - decimal representation of year.
    * @return string that says type of year.
    */
-  public String yearType(int year){
+  protected String yearType(int year){
     if (year % 4 != 0) {
       return "default";
     }
@@ -37,8 +37,11 @@ public class Calendar {
    * @param year - decimal representation of year.
    * @return string with name of day of week.
    */
-  public String weekday(int day, int month, int year) {
+  protected String weekday(int day, int month, int year) {
     String dayName;
+    if (month < 1 || month > 12) {
+      throw new InvalidParameterException("Incorrect month");
+    }
     if (month < 3) {
       --year;
       month += 10;
@@ -73,6 +76,34 @@ public class Calendar {
     return dayName;
   }
 
+  protected String countDate(int day, int month, int year) {
+    if (month == 12 && day > 31) {
+      month = 1;
+      day = 1;
+      year++;
+      if (yearType(year) == "leap") {
+        febDays = 29;
+      } else {
+        febDays = 28;
+      }
+    }
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+      month++;
+      day = 1;
+    } else {
+      if (month == 2 && day > febDays) {
+        month++;
+        day = 1;
+      } else {
+        if (day > 31) {
+          month++;
+          day = 1;
+        }
+      }
+    }
+    return day + "/" + month + "/" + year;
+  }
+
   /**
    * Calculate what day will be after given number of days passed.
    * @param day - decimal number of day in mouth.
@@ -82,8 +113,10 @@ public class Calendar {
    * @param whatReturn - accepts string with what type of information method will return. (month, year, date, dayName)
    * @return string with name of month, year, full date or name of the day in week.
    */
-  public String whatDayWillBe(int day, int month, int year, int dayPassed, String whatReturn) {
-    int febDays;
+  protected String whatDayWillBe(int day, int month, int year, int dayPassed, String whatReturn) {
+    if (day < 0 || day > 31 || month < 0 || month > 12 || dayPassed < 0) {
+      throw new InvalidParameterException("Invalid date");
+    }
     if (yearType(year) == "leap") {
       febDays = 29;
     } else {
@@ -91,35 +124,19 @@ public class Calendar {
     }
     while (dayPassed-- != 0) {
       day++;
-      if (month == 12 && day > 31) {
-        month = 1;
-        day = 1;
-        year++;
-        if (yearType(year) == "leap") {
-          febDays = 29;
-        } else {
-          febDays = 28;
-        }
-      }
-      if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
-        month++;
-        day = 1;
-      } else {
-        if (month == 2 && day > febDays) {
-          month++;
-          day = 1;
-        } else {
-          if (day > 31) {
-            month++;
-            day = 1;
-          }
-        }
-      }
+      String tmp = countDate(day, month, year);
+      String hlp;
+      hlp = tmp.substring(0, tmp.indexOf("/"));
+      day = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
+      month = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
+      year = Integer.parseInt(hlp);
     }
     /*System.out.print(day + ":" + month + ":" + year);
     System.out.println();*/
     if (whatReturn == "date") {
-      return day + ":" + month + ":" + year;
+      return day + "/" + month + "/" + year;
     } else {
       if (whatReturn == "dayName") {
         return weekday(day, month, year);
@@ -150,8 +167,11 @@ public class Calendar {
    * @param whatReturn - accepts string with what type of information method will return. (date, day)
    * @return string with number of days between two dates or number of days, months and years between two dates.
    */
-  public String differenceDate(int day1, int month1, int year1, int day2, int month2, int year2, String whatReturn) {
-    int febDays;
+  protected String differenceDate(int day1, int month1, int year1, int day2, int month2, int year2, String whatReturn) {
+    if (day1 < 0 || day1 > 31 || month1 < 0 || month1 > 12
+        || day2 < 0 || day2 > 31 || month2 < 0 || month2 > 12 || year1 > year2) {
+      throw new InvalidParameterException("Invalid date");
+    }
     int dayPassed = 0;
     /* int daysB = 0, monthsB = 0, yearsB = 0;*/
     if (yearType(year1) == "leap") {
@@ -165,30 +185,14 @@ public class Calendar {
       }
       day1++;
       dayPassed++;
-      if (month1 == 12 && day1 > 31) {
-        month1 = 1;
-        day1 = 1;
-        year1++;
-        if (yearType(year1) == "leap") {
-          febDays = 29;
-        } else {
-          febDays = 28;
-        }
-      }
-      if ((month1 == 4 || month1 == 6 || month1 == 9 || month1 == 11) && day1 > 30) {
-        month1++;
-        day1 = 1;
-      } else {
-        if (month1 == 2 && day1 > febDays) {
-          month1++;
-          day1 = 1;
-        } else {
-          if (day1 > 31) {
-            month1++;
-            day1 = 1;
-          }
-        }
-      }
+      String tmp = countDate(day1, month1, year1);
+      String hlp;
+      hlp = tmp.substring(0, tmp.indexOf("/"));
+      day1 = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
+      month1 = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
+      year1 = Integer.parseInt(hlp);
     }
     /*System.out.println(whatDayWillBe(0,0,0, dayPassed, "date"));
     System.out.print(daysB + ":" + monthsB + ":" + yearsB);
@@ -213,9 +217,10 @@ public class Calendar {
    * @param dayName - name of the day of week.
    * @return full date.
    */
-  public String whenFirst(int day1, int month1, int year1, int day2, String dayName) {
-    int febDays;
-    /* int daysB = 0, monthsB = 0, yearsB = 0;*/
+  protected String whenFirst(int day1, int month1, int year1, int day2, String dayName) {
+    if (day1 < 0 || day1 > 31 || month1 < 0 || month1 > 12 || day2 < 0) {
+      throw new InvalidParameterException("Invalid date");
+    }
     if (yearType(year1) == "leap") {
       febDays = 29;
     } else {
@@ -226,31 +231,15 @@ public class Calendar {
         break;
       }
       day1++;
-      if (month1 == 12 && day1 > 31) {
-        month1 = 1;
-        day1 = 1;
-        year1++;
-        if (yearType(year1) == "leap") {
-          febDays = 29;
-        } else {
-          febDays = 28;
-        }
-      }
-      if ((month1 == 4 || month1 == 6 || month1 == 9 || month1 == 11) && day1 > 30) {
-        month1++;
-        day1 = 1;
-      } else {
-        if (month1 == 2 && day1 > febDays) {
-          month1++;
-          day1 = 1;
-        } else {
-          if (day1 > 31) {
-            month1++;
-            day1 = 1;
-          }
-        }
-      }
+      String tmp = countDate(day1, month1, year1);
+      String hlp;
+      hlp = tmp.substring(0, tmp.indexOf("/"));
+      day1 = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
+      month1 = Integer.parseInt(hlp);
+      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
+      year1 = Integer.parseInt(hlp);
     }
-    return day1 +":" + month1 + ":" + year1;
+    return day1 +"/" + month1 + "/" + year1;
   }
 }
