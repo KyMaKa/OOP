@@ -6,24 +6,44 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.cli.*;
 
 import java.io.*;
+import java.sql.ClientInfoStatus;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 public class Notebook {
 
-  public static void main(String[] args) {
+  public List<Note> nbook = new ArrayList<>();
+  public int last;
+  public List<String> list = new ArrayList<>()  ;
+
+  ObjectMapper mapper = new ObjectMapper();
+  File file = new File("Notebook.json");
+  ArrayNode arrayNode;
+  ObjectNode obj = mapper.createObjectNode();
+  public Notebook() throws IOException {
+    if (file.length() != 0) {
+      arrayNode = (ArrayNode) mapper.readTree(file);
+      for (int i = 0; i < arrayNode.size(); i++) {
+        this.nbook.add(mapper.readValue(arrayNode.get(i).toString(), Note.class));
+        last++;
+      }
+    } else {
+      arrayNode = obj.putArray(mapper.writeValueAsString(" "));
+      this.last = 0;
+    }
+  }
+
+  public static void main(String[] args) throws IOException {
     Notebook nb = new Notebook();
     CommandLineParser parser = new DefaultParser();
     Options options = initOpts();
     System.out.println("Notebook opened.");
-
     try {
       CommandLine line = parser.parse(options, args);
       if (line.hasOption("a")) {
         String nArgs = line.getOptionValue("a");
-        nb.writeNote(nArgs);
+        nb.addNote(nArgs);
         return;
       }
       if (line.hasOption("rm")) {
@@ -57,7 +77,7 @@ public class Notebook {
     System.out.println("Notebook closed.");
   }
 
-  private static Options initOpts() {
+  public static Options initOpts() {
     Options options = new Options();
     options.addOption(
         "s", "show", false, "Show all notes.");
@@ -78,73 +98,41 @@ public class Notebook {
     return options;
   }
 
-  public void writeNote(String notes) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    File file = new File("Notebook.json");
-    ArrayNode arrayNode;
+  public void addNote(String notes) throws IOException {
     Note note = new Note();
     note.setString(notes);
-    if (file.length() != 0) {
-      arrayNode = (ArrayNode) mapper.readTree(file);
-      arrayNode.add(mapper.valueToTree(note));
-    } else {
-      ObjectNode obj = mapper.createObjectNode();
-      arrayNode = obj.putArray(mapper.writeValueAsString(note));
-      arrayNode.add(mapper.valueToTree(note));
-    }
-
-    mapper.writeValue(file, arrayNode);
+    nbook.add(note);
+    arrayNode.add(mapper.valueToTree(note));
+    last++;
+    updateJsonFile();
     System.out.println("Added new note!");
   }
 
   public void deleteNode(String string) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    File file = new File("Notebook.json");
-    ArrayNode arrayNode;
-    if (file.length() != 0) {
-      arrayNode = (ArrayNode) mapper.readTree(file);
-    } else {
-      System.out.println("File is empty");
-      return;
-    }
     boolean foundNote = false;
     for (int i = 0; i < arrayNode.size(); i++) {
       if (arrayNode.get(i).get("string").asText().equals(string)) {
         arrayNode.remove(i);
+        last--;
         foundNote = true;
       }
     }
-    if (foundNote == false) {
+    if (!foundNote) {
       System.out.println("No such note");
       return;
     }
-    mapper.writeValue(file, arrayNode);
     System.out.println("Note removed!");
+    updateJsonFile();
   }
 
-  public void show() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    File file = new File("Notebook.json");
-
-    ArrayNode arrayNode;
-    if (file.length() != 0) {
-      arrayNode = (ArrayNode) mapper.readTree(file);
-    } else {
-      System.out.println("File is empty");
-      return;
-    }
+  public void show() {
     for (int i = arrayNode.size() - 1; i >= 0; i--) {
-      System.out.println(arrayNode.get(i).get("string").asText());
+      list.add(arrayNode.get(i).get("string").asText());
     }
+    writeOnConsole(list);
   }
 
-  public void showInterval(String[] args) throws IOException, ParseException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    File file = new File("Notebook.json");
+  public void showInterval(String[] args) throws ParseException {
     String dateIn1 = args[0];
     String dateIn2 = args[1];
 
@@ -152,13 +140,6 @@ public class Notebook {
     for (int i = 2; i < args.length; i++) {
       int j = 0;
       keyWords[j++] = args[i];
-    }
-    ArrayNode arrayNode;
-    if (file.length() != 0) {
-      arrayNode = (ArrayNode) mapper.readTree(file);
-    } else {
-      System.out.println("File is empty");
-      return;
     }
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -176,7 +157,7 @@ public class Notebook {
             c++;
           }
           if (c == keyWords.length) {
-            System.out.println(arrayNode.get(i).get("string").asText());
+            list.add(arrayNode.get(i).get("string").asText());
             hasNote = true;
           }
         }
@@ -184,6 +165,22 @@ public class Notebook {
     }
     if (!hasNote) {
       System.out.println("No notes with such criteria");
+    }
+    writeOnConsole(list);
+  }
+
+  private void updateJsonFile() throws IOException {
+    mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    //arrayNode.add(mapper.valueToTree(nbook.get(last - 1)));
+    mapper.writeValue(file, arrayNode);
+  }
+
+  private void writeOnConsole(List string) {
+    if (string.size() == 0) {
+      System.out.println("Notebook is empty.");
+    }
+    for (int i = 0; i < string.size(); i++) {
+      System.out.println(string.get(i));
     }
   }
 }
