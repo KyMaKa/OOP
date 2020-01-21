@@ -1,6 +1,5 @@
 package ru.nsu.fit.g18214.shatalov;
 
-import com.sun.tools.classfile.ConstantPool;
 import org.junit.Assert;
 import org.junit.Test;
 
