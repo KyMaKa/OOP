@@ -27,8 +27,3 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
-
-application {
-    // Define the main class for the application
-    mainClassName = 'ru.nsu.fit.g18214.shatalov.App'
-}
