@@ -7,22 +7,17 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import static org.junit.Assert.*;
 
 public class AppTest {
     @Test
     public void test() throws ExecutionException, InterruptedException {
-        Main main = new Main();
+        ThreadFind threadFind = new ThreadFind();
         long end, start;
         Integer[] arr = new Integer[8000];
         Arrays.fill(arr, 1000000007);
         for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
             start = System.currentTimeMillis();
-            main.find(arr, i);
+            threadFind.find(arr, i);
             end = System.currentTimeMillis();
             System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 1000);
         }

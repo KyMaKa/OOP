@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class Main {
+public class ThreadFind {
   public void find(Integer[] arr, Integer threads)
       throws ExecutionException, InterruptedException {
 
