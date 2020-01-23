@@ -125,16 +125,12 @@ public class Calendar {
     while (dayPassed-- != 0) {
       day++;
       String tmp = countDate(day, month, year);
-      String hlp;
-      hlp = tmp.substring(0, tmp.indexOf("/"));
-      day = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
-      month = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
-      year = Integer.parseInt(hlp);
+      Integer[] arr = toInt(tmp);
+      day = arr[0];
+      month = arr[1];
+      year = arr[2];
     }
-    /*System.out.print(day + ":" + month + ":" + year);
-    System.out.println();*/
+
     if (whatReturn == "date") {
       return day + "/" + month + "/" + year;
     } else {
@@ -186,17 +182,12 @@ public class Calendar {
       day1++;
       dayPassed++;
       String tmp = countDate(day1, month1, year1);
-      String hlp;
-      hlp = tmp.substring(0, tmp.indexOf("/"));
-      day1 = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
-      month1 = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
-      year1 = Integer.parseInt(hlp);
+      Integer[] arr = toInt(tmp);
+      day1 = arr[0];
+      month1 = arr[1];
+      year1 = arr[2];
     }
-    /*System.out.println(whatDayWillBe(0,0,0, dayPassed, "date"));
-    System.out.print(daysB + ":" + monthsB + ":" + yearsB);
-    System.out.println();*/
+
     if (whatReturn == "day") {
       return "" + dayPassed;
     } else {
@@ -232,14 +223,27 @@ public class Calendar {
       }
       day1++;
       String tmp = countDate(day1, month1, year1);
-      String hlp;
-      hlp = tmp.substring(0, tmp.indexOf("/"));
-      day1 = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/") + 1, tmp.indexOf("/", tmp.indexOf("/") + 1));
-      month1 = Integer.parseInt(hlp);
-      hlp = tmp.substring(tmp.indexOf("/", tmp.indexOf("/") + 1) + 1);
-      year1 = Integer.parseInt(hlp);
+      Integer[] arr = toInt(tmp);
+      day1 = arr[0];
+      month1 = arr[1];
+      year1 = arr[2];
     }
     return day1 +"/" + month1 + "/" + year1;
+  }
+
+  protected Integer[] toInt(String date) {
+    String hlp;
+    hlp = date.substring(0, date.indexOf("/"));
+    int day1 = Integer.parseInt(hlp);
+    hlp = date.substring(date.indexOf("/") + 1, date.indexOf("/", date.indexOf("/") + 1));
+    int month1 = Integer.parseInt(hlp);
+    hlp = date.substring(date.indexOf("/", date.indexOf("/") + 1) + 1);
+    int year1 = Integer.parseInt(hlp);
+    Integer[] arr = {day1, month1, year1};
+    return arr;
+  }
+
+  protected String toString(int day, int month, int year) {
+    return day + "/" + month + "/" + year;
   }
 }

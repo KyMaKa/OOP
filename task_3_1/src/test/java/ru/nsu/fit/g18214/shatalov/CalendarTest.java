@@ -77,4 +77,14 @@ public class CalendarTest {
     Assert.assertEquals("13/3/2020",
         cal.findNearest(9, 1, 2020, 13, "Friday"));
   }
+
+  @Test
+  public void testConv() {
+    for (int i = 0; i < 100000; i++) {
+      String string = cal.gen.toString(22, 1, 2020);
+      Integer[] arr = cal.gen.toInt(string);
+      string = cal.gen.toString(arr[0], arr[1], arr[2]);
+      //System.out.println(string);
+    }
+  }
 }
