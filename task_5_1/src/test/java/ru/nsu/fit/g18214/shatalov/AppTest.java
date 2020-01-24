@@ -15,11 +15,14 @@ public class AppTest {
         long end, start;
         Integer[] arr = new Integer[8000];
         Arrays.fill(arr, 1000000007);
-        for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
-            start = System.currentTimeMillis();
-            threadFind.find(arr, i);
-            end = System.currentTimeMillis();
-            System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 1000);
+        for (int j = 1; j <= 3; j++) {
+            System.out.println("Run " + j + ":");
+            for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
+                start = System.currentTimeMillis();
+                threadFind.find(arr, i);
+                end = System.currentTimeMillis();
+                System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 1000);
+            }
         }
     }
 }
