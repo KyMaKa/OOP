@@ -2,6 +2,8 @@ package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.BlockingQueue;
 
+import static java.lang.Thread.sleep;
+
 public class Worker implements Runnable {
 
   private BlockingQueue<Order> takenOrdersQueue;
@@ -52,8 +54,9 @@ public class Worker implements Runnable {
         takeOrder();
         this.button = false;
         this.busy = true;
-        wait(getEfficiency() * 1000);
+        sleep(getEfficiency() * 1000);
         orderReady();
+        System.out.println("Order Ready!");
         finishedOrdersQueue.put(order);
         warehouse.placePackage();
         free();
