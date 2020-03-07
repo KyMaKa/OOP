@@ -12,10 +12,17 @@ public class Warehouse {
     this.storage = blockingQueue;
   }
 
-  public void placePackage() {
+  public void placePackage(Order order) throws InterruptedException {
     if (hasFreeSpace()) {
       this.usedSpace++;
+      this.storage.put(order);
     }
+  }
+
+  public Order takePackage() throws InterruptedException {
+    Order order = this.storage.take();
+    this.usedSpace--;
+    return order;
   }
 
   public boolean hasFreeSpace() {

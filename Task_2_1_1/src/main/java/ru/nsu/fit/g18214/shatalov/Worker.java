@@ -14,15 +14,17 @@ public class Worker implements Runnable {
   private boolean busy;
   private boolean ready = false;
   private Order order;
-  private boolean button = false;
+  private int name;
 
-  public Worker(int exp, BlockingQueue<Order> takenOrdersQueue, BlockingQueue<Order> finishedOrdersQueue, Warehouse warehouse) {
+  public Worker(int exp, int id, BlockingQueue<Order> takenOrdersQueue,
+                BlockingQueue<Order> finishedOrdersQueue, Warehouse warehouse) {
     this.warehouse = warehouse;
     this.finishedOrdersQueue = finishedOrdersQueue;
     this.takenOrdersQueue = takenOrdersQueue;
     this.experience = exp;
     this.efficiency = (this.experience ^ 2) / 2;
     this.busy = false;
+    this.name = id;
   }
 
   public boolean isBusy() {
@@ -47,18 +49,24 @@ public class Worker implements Runnable {
     this.ready = false;
   }
 
+  public int getName() {
+    return this.name;
+  }
+
   public void run() {
     try {
-      if (!isBusy() && !this.button) {
-        this.button = true;
+      if (!isBusy() && !PizzaTime.buttonW) {
+        PizzaTime.buttonW = true;
+        System.out.println("Worker " + this.name + " pushed button");
         takeOrder();
-        this.button = false;
+        System.out.println("Worker " + this.name + " took order number " + this.order.getId());
+        PizzaTime.buttonW = false;
         this.busy = true;
         sleep(getEfficiency() * 1000);
         orderReady();
-        System.out.println("Order Ready!");
-        finishedOrdersQueue.put(order);
-        warehouse.placePackage();
+        System.out.println("Order number " + this.order.getId() + " ready!");
+        //finishedOrdersQueue.put(order);
+        warehouse.placePackage(order);
         free();
       }
 

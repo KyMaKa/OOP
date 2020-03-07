@@ -1,10 +1,16 @@
 package ru.nsu.fit.g18214.shatalov;
 
 public class Order {
-  String order;
+  private String order;
+  private int id;
 
-  public void Order() {
+  public Order(int id) {
     this.order = "Pizza time!";
+    this.id = id;
+  }
+
+  public int getId() {
+    return this.id;
   }
 
 }
