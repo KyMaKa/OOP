@@ -3,12 +3,12 @@ package ru.nsu.fit.g18214.shatalov;
 import java.util.concurrent.BlockingQueue;
 import java.util.UUID;
 import static java.lang.Thread.sleep;
+import static ru.nsu.fit.g18214.shatalov.PizzaTime.orders;
+import static ru.nsu.fit.g18214.shatalov.PizzaTime.warehouse;
 
 public class Worker implements Runnable {
 
   private BlockingQueue<Order> takenOrdersQueue;
-  private BlockingQueue<Order> finishedOrdersQueue;
-  private Warehouse warehouse;
   private int experience;
   private int efficiency;
   private boolean busy;
@@ -16,11 +16,8 @@ public class Worker implements Runnable {
   private Order order;
   private int name;
 
-  public Worker(int exp, int id, BlockingQueue<Order> takenOrdersQueue,
-                BlockingQueue<Order> finishedOrdersQueue, Warehouse warehouse) {
-    this.warehouse = warehouse;
-    this.finishedOrdersQueue = finishedOrdersQueue;
-    this.takenOrdersQueue = takenOrdersQueue;
+  public Worker(int exp, int id) {
+    this.takenOrdersQueue = orders;
     this.experience = exp;
     this.efficiency = (this.experience ^ 2) / 2;
     this.busy = false;

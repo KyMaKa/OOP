@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 import static java.lang.Thread.sleep;
+import static ru.nsu.fit.g18214.shatalov.PizzaTime.warehouse;
 
 public class Delivery implements Runnable {
   private int experience;
@@ -15,15 +16,13 @@ public class Delivery implements Runnable {
   private Order order;
   private BlockingQueue<Order> storageQueue;
   private ArrayList<Integer> packages;
-  private Warehouse warehouse;
 
-  public Delivery(int name, int experience, int capacity, BlockingQueue<Order> storageQueue, Warehouse warehouse) {
+  public Delivery(int name, int experience, int capacity, BlockingQueue<Order> storageQueue) {
     this.storageQueue = storageQueue;
     this.capacity = capacity;
     this.experience = experience;
     this.name = name;
     this.efficiency = (10) / this.experience;
-    this.warehouse = warehouse;
     this.packages = new ArrayList<>();
   }
 
