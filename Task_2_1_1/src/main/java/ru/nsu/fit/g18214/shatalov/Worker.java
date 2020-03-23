@@ -1,7 +1,7 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.BlockingQueue;
-
+import java.util.UUID;
 import static java.lang.Thread.sleep;
 
 public class Worker implements Runnable {

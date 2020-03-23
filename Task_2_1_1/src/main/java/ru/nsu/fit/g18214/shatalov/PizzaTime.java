@@ -1,5 +1,9 @@
 package ru.nsu.fit.g18214.shatalov;
 
+import java.io.File;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -14,6 +18,8 @@ public class PizzaTime {
   static boolean buttonW = false;
   static boolean buttonD = false;
 
+  File file = new File("stuff.json");
+  ObjectMapper mapper = new ObjectMapper();
   public void openPizza() {
     for (int i = 0; i < 5; i++) {
       Worker worker = new Worker(1, i, orders, storage, warehouse);
