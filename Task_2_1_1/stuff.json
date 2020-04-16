@@ -1,5 +1,5 @@
 {
-  "Workers": [
+  "Bakers": [
     {
     "name":"worker1",
     "experience":"1"
@@ -20,15 +20,18 @@
   "Delivery": [
     {
       "name":"delivery1",
-      "experience":"1"
+      "experience":"1",
+      "storage":"1"
     },
     {
       "name":"delivery2",
-      "experience":"2"
+      "experience":"2",
+      "storage":"2"
     },
     {
       "name":"delivery3",
-      "experience":"3"
+      "experience":"3",
+      "storage":"3"
     }
   ],
   "Warehouse": [

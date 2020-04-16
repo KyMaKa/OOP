@@ -4,6 +4,7 @@ import java.io.File;
 import com.fasterxml.jackson.databind.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -23,17 +24,18 @@ public class PizzaTime {
 
   public void openPizza() throws IOException {
     JsonNode json = mapper.readTree(file);
-    JsonNode workers = json.get("Workers");
-    for (int i = 0; i < workers.size(); i++) {
-      Worker worker = new Worker(workers.get(i).get("experience").asInt(), i);
+    JsonNode bakers = json.get("Bakers");
+    for (int i = 0; i < bakers.size(); i++) {
+      Worker worker = new Worker(bakers.get(i).get("experience").asInt(), i);
       workersList.add(worker);
     }
     JsonNode deliverys = json.get("Delivery");
     for (int i = 0; i < deliverys.size(); i++) {
-      Delivery delivery = new Delivery(i, deliverys.get(i).get("experience").asInt(), 1);
+      Delivery delivery = new Delivery(i, deliverys.get(i).get("experience").asInt(),
+          deliverys.get(i).get("storage").asInt());
       deliveryList.add(delivery);
     }
-    for (int i = 0; i < workers.size(); i++) {
+    for (int i = 0; i < bakers.size(); i++) {
       new Thread(workersList.get(i)).start();
     }
     for (int i = 0; i < deliverys.size(); i++) {
@@ -42,19 +44,17 @@ public class PizzaTime {
 
   }
 
-  public void insertOrders() throws InterruptedException {
-    for (int i = 0; i < 10; i++) {
-      Order order = new Order(i);
-      ordersList.add(order);
-      orders.put(order);
-    }
+  public void createOrders() {
+    new Thread(new Order(1)).start();
   }
 
 
   public static void main(String[] args) throws InterruptedException, IOException {
     PizzaTime pizzaTime = new PizzaTime();
-    pizzaTime.insertOrders();
-    while (!pizzaTime.ordersList.isEmpty()) {
+    pizzaTime.createOrders();
+    long t = System.currentTimeMillis();
+    long end = t + 150000;
+    while (System.currentTimeMillis() < end) {
       pizzaTime.openPizza();
     }
   }

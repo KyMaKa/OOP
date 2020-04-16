@@ -57,11 +57,12 @@ public class Delivery implements Runnable {
         int taken = 0;
         System.out.println("Delivery guy " + this.name + " pushed button");
         while(this.carried != this.capacity) {
-          this. order = warehouse.takePackage();
+          this.order = warehouse.takePackage();
           this.carried++;
           taken++;
           this.packages.add(this.order.getId());
-          System.out.println("Delivery guy " + this.name + " took package number " + this.order.getId());
+          System.out.println("Delivery guy " + this.name +
+              " took package number " + this.order.getId());
         }
         PizzaTime.buttonD = false;
         this.busy = true;

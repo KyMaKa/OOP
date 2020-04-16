@@ -1,7 +1,6 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.UUID;
 import static java.lang.Thread.sleep;
 import static ru.nsu.fit.g18214.shatalov.PizzaTime.orders;
 import static ru.nsu.fit.g18214.shatalov.PizzaTime.warehouse;
@@ -56,7 +55,8 @@ public class Worker implements Runnable {
         PizzaTime.buttonW = true;
         System.out.println("Worker " + this.name + " pushed button");
         takeOrder();
-        System.out.println("Worker " + this.name + " took order number " + this.order.getId());
+        System.out.println("Worker " + this.name + " took order number "
+            + this.order.getId());
         PizzaTime.buttonW = false;
         this.busy = true;
         sleep(getEfficiency() * 1000);
@@ -66,7 +66,6 @@ public class Worker implements Runnable {
         warehouse.placePackage(order);
         free();
       }
-
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
