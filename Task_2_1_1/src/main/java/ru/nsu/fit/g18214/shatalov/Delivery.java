@@ -52,27 +52,38 @@ public class Delivery implements Runnable {
 
   public void run() {
     try {
-      if (!isBusy() && !PizzaTime.buttonD && this.carried != this.capacity) {
-        PizzaTime.buttonD = true;
-        int taken = 0;
-        System.out.println("Delivery guy " + this.name + " pushed button");
-        while(this.carried != this.capacity) {
-          this.order = warehouse.takePackage();
-          this.carried++;
-          taken++;
-          this.packages.add(this.order.getId());
-          System.out.println("Delivery guy " + this.name +
-              " took package number " + this.order.getId());
+      if (!PizzaTime.stop) {
+        if (!isBusy() && !PizzaTime.buttonD && this.carried != this.capacity) {
+          PizzaTime.buttonD = true;
+          int taken = 0;
+          System.out.println("Delivery guy " + this.name + " pushed button");
+          if (PizzaTime.stop && storage.isEmpty()) {
+            return;
+          }
+          while (this.carried != this.capacity) {
+            this.order = warehouse.takePackage();
+            if (this.order != null) {
+              this.carried++;
+              taken++;
+              this.packages.add(this.order.getId());
+              System.out.println("Delivery guy " + this.name +
+                  " took package number " + this.order.getId());
+            } else {
+              if (PizzaTime.stop) {
+                break;
+              }
+            }
+          }
+          PizzaTime.buttonD = false;
+          this.busy = true;
+          for (int i = 0; i < taken; i++) {
+            sleep(getEfficiency() * 700);
+            System.out.println("Package number " + this.packages.get(i) + " delivered!");
+          }
+          delivered();
         }
-        PizzaTime.buttonD = false;
-        this.busy = true;
-        for (int i = 0; i < taken; i++) {
-          sleep(getEfficiency() * 700);
-          System.out.println("Package number " + this.packages.get(i) + " delivered!");
-        }
-        delivered();
+        new Thread(this).start();
       }
-
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

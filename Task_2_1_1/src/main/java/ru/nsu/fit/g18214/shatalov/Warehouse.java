@@ -1,15 +1,16 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class Warehouse {
   private int maxSpace;
   private int usedSpace = 0;
   private BlockingQueue<Order> storage;
 
-  public Warehouse(int max, BlockingQueue<Order> blockingQueue) {
+  public Warehouse(int max) {
     this.maxSpace = max;
-    this.storage = blockingQueue;
+    this.storage = PizzaTime.storage;
   }
 
   public void placePackage(Order order) throws InterruptedException {
@@ -20,7 +21,7 @@ public class Warehouse {
   }
 
   public Order takePackage() throws InterruptedException {
-    Order order = this.storage.take();
+    Order order = this.storage.poll(5000, TimeUnit.MICROSECONDS);
     this.usedSpace--;
     return order;
   }

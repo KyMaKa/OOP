@@ -9,9 +9,10 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class PizzaTime {
+  static boolean stop = false;
   static BlockingDeque<Order> orders = new LinkedBlockingDeque<>();
   static BlockingDeque<Order> storage = new LinkedBlockingDeque<>(10);
-  static Warehouse warehouse = new Warehouse(10, storage);
+  static Warehouse warehouse = new Warehouse(10);
   ArrayList<Worker> workersList = new ArrayList<Worker>();
   ArrayList<Order> ordersList = new ArrayList<>();
   ArrayList<Delivery> deliveryList = new ArrayList<>();
@@ -44,18 +45,20 @@ public class PizzaTime {
 
   }
 
-  public void createOrders() {
-    new Thread(new Order(1)).start();
+  public void createOrders(int i) {
+    new Thread(new Order(i)).start();
   }
 
 
   public static void main(String[] args) throws InterruptedException, IOException {
     PizzaTime pizzaTime = new PizzaTime();
-    pizzaTime.createOrders();
     long t = System.currentTimeMillis();
-    long end = t + 150000;
-    while (System.currentTimeMillis() < end) {
-      pizzaTime.openPizza();
+    long end = t + 15000;
+    pizzaTime.createOrders(1);
+    pizzaTime.openPizza();
+    while (System.currentTimeMillis() <= end) {
+      stop = false;
     }
+    stop = true;
   }
 }

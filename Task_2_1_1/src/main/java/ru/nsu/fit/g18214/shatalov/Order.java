@@ -18,13 +18,14 @@ public class Order implements Runnable {
   }
 
   public void run() {
-    int i = 1;
     try {
-      Thread.sleep(new Random().nextInt((1000 - 1) + 1) + 1);
-      System.out.println("New order # " + i);
-      Order order = new Order(i++);
-      PizzaTime.orders.put(order);
-
+      if (!PizzaTime.stop) {
+        System.out.println("New order # " + this.id);
+        PizzaTime.orders.put(this);
+        Thread.sleep(5000);
+        Order order = new Order(this.id + 1);
+        new Thread(order).start();
+      }
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
