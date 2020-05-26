@@ -4,11 +4,10 @@ import java.util.Random;
 
 public class Order implements Runnable {
 
-  private String order;
-  private int id;
+  private final int id;
 
   public Order(int id) {
-    this.order = "Pizza time!";
+    String order = "Pizza time!";
     this.id = id;
   }
 
