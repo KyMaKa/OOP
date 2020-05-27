@@ -13,6 +13,11 @@ public class Warehouse {
     this.storage = PizzaTime.storage;
   }
 
+  /**
+   * Places package in queue and increases counter of used space (how many items in queue).
+   * @param order package to place. S
+   * @throws InterruptedException if interrupted while waiting.
+   */
   public void placePackage(Order order) throws InterruptedException {
     if (hasFreeSpace()) {
       this.usedSpace++;
@@ -20,9 +25,17 @@ public class Warehouse {
     }
   }
 
+  /**
+   * Takes package from queue.
+   * If queue is empty - wait 5 seconds and then returns null.
+   * @return taken package or null if queue if empty.
+   * @throws InterruptedException if interrupted while waiting.
+   */
   public Order takePackage() throws InterruptedException {
     Order order = this.storage.poll(5000, TimeUnit.MICROSECONDS);
-    this.usedSpace--;
+    if (order != null) {
+      this.usedSpace--;
+    }
     return order;
   }
 

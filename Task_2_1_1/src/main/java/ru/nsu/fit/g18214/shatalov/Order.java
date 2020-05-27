@@ -16,6 +16,9 @@ public class Order implements Runnable {
     return this.id;
   }
 
+  /**
+   * Starts thread that generates orders over time.
+   */
   public void run() {
     try {
       if (!PizzaTime.stop) {
