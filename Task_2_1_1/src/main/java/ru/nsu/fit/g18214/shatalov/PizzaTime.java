@@ -49,7 +49,7 @@ public class PizzaTime {
   }
 
   /**
-   * Starts threads one by one with parameters specified in json file.
+   * Starts threads one by one with employees parameters from json nodes.
    * @param bakers Json node with information about every baker.
    * @param deliverys Json node with information about every delivery guy.
    */
@@ -71,8 +71,11 @@ public class PizzaTime {
 
   /**
    * Main method to start use all other methods.
+   * Program stops after 15 seconds like PizzaTime shop work hours is ended.
+   * All already received orders will be proceed and delivered.
+   * No new orders will be taken.
    * @param args command line arguments.
-   * @throws IOException --
+   * @throws IOException if there is no file or file cannot be read.
    */
   public static void main(String[] args) throws IOException {
     PizzaTime pizzaTime = new PizzaTime();

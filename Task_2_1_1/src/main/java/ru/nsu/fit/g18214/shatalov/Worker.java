@@ -37,6 +37,11 @@ public class Worker implements Runnable {
     return this.efficiency;
   }
 
+  /**
+   * Takes order from queue.
+   * If there is no orders - waits 5 seconds and then returns null.
+   * @throws InterruptedException if can't access queue.
+   */
   public void takeOrder() throws InterruptedException {
     this.busy = true;
     this.order = takenOrdersQueue.poll(5000, TimeUnit.MILLISECONDS);
@@ -57,8 +62,10 @@ public class Worker implements Runnable {
 
   /**
    * Starts thread.
+   * If PizzaTime shop is still working (PizzaTime.stop != true) ->
    * If button isn't pushed (other worker isn't waiting for new order to take) ->
-   * -> push button and take latest order from orders queue (if there is no order - wait for it).
+   * -> push button and take latest order from orders queue (if there is no order - wait for it 5 sec).
+   * If after 5 seconds there is still no order -> resets all states and thread starts over.
    * Worker become busy (can't take orders).
    * Thread wait a certain time based on worker efficiency.
    * After this time order counts as ready and worker place it in warehouse queue.

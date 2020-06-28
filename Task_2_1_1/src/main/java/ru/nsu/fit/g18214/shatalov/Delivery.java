@@ -15,7 +15,7 @@ public class Delivery implements Runnable {
   private boolean busy;
   private final int name;
   private Order order;
-  private final BlockingQueue<Order> storageQueue;
+  //private final BlockingQueue<Order> storageQueue;
   private final ArrayList<Integer> packages;
 
   /**
@@ -26,7 +26,7 @@ public class Delivery implements Runnable {
    * @param capacity - how many orders can fit in trunc.
    */
   public Delivery(int name, int experience, int capacity) {
-    this.storageQueue = storage;
+    //this.storageQueue = storage;
     this.capacity = capacity;
     this.name = name;
     this.efficiency = (10) / experience;
@@ -61,6 +61,7 @@ public class Delivery implements Runnable {
 
   /**
    * Starts thead (D.Guy starts working).
+   * If PizzaTime shop is still working (PizzaTime.stop != true) ->
    * If button isn't pushed (other D.Duy isn't waiting for package to take) ->
    * -> pushes button and takes latest packages from warehouse queue ->
    * -> (if there is no - wait for it some time).
