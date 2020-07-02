@@ -1,0 +1,32 @@
+{
+  "Bakers": [
+    {
+    "name":"worker1",
+    "experience":"1"
+  },
+    {
+      "name":"worker2",
+      "experience":"2"
+    },
+    {
+      "name":"worker3",
+      "experience":"3"
+    },
+    {
+      "name":"worker4",
+      "experience":"1"
+    }
+  ],
+  "Delivery": [
+    {
+      "name":"delivery1",
+      "experience":"1",
+      "storage":"5"
+    }
+  ],
+  "Warehouse": [
+    {
+      "maxSpace": "2"
+    }
+  ]
+}
