@@ -96,6 +96,7 @@ public class Delivery implements Runnable {
               }
             }
           }
+          System.out.println("Delivery guy #" + this.name + " took " + this.carried + " packages");
           PizzaTime.buttonD = false;
           this.busy = true;
           for (int i = 0; i < taken; i++) {

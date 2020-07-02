@@ -11,8 +11,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class PizzaTime {
   static boolean stop = false;
   static BlockingDeque<Order> orders = new LinkedBlockingDeque<>();
-  static BlockingDeque<Order> storage = new LinkedBlockingDeque<>(10);
-  static Warehouse warehouse = new Warehouse(10);
+  static BlockingDeque<Order> storage;
+  static Warehouse warehouse;
   ArrayList<Worker> workersList = new ArrayList<>();
   //ArrayList<Order> ordersList = new ArrayList<>();
   ArrayList<Delivery> deliveryList = new ArrayList<>();
@@ -20,7 +20,6 @@ public class PizzaTime {
   static boolean buttonW = false;
   static boolean buttonD = false;
 
-  File file = new File("stuff.json");
   ObjectMapper mapper = new ObjectMapper();
 
   JsonNode json;
@@ -32,20 +31,33 @@ public class PizzaTime {
    * Fills nodes with information from this file.
    * @throws IOException if required json file "stuff.json" not found.
    */
-  public void read() throws IOException {
+  public void read(File file) throws IOException {
     json = mapper.readTree(file);
     bakers = json.get("Bakers");
+    if (bakers == null) {
+      throw new NullPointerException("No info about bakers in file");
+    }
     for (int i = 0; i < bakers.size(); i++) {
       Worker worker = new Worker(bakers.get(i).get("experience").asInt(), i);
       workersList.add(worker);
     }
 
     deliverys = json.get("Delivery");
+    if (deliverys == null) {
+      throw new NullPointerException("No info about delivery in file");
+    }
     for (int i = 0; i < deliverys.size(); i++) {
       Delivery delivery = new Delivery(i, deliverys.get(i).get("experience").asInt(),
           deliverys.get(i).get("storage").asInt());
       deliveryList.add(delivery);
     }
+
+    JsonNode warehouseStorage = json.get("Warehouse");
+    if (warehouseStorage == null) {
+      throw new NullPointerException("No info about warehouse size in file");
+    }
+    storage = new LinkedBlockingDeque<>(warehouseStorage.get(0).get("maxSpace").asInt());
+    warehouse = new Warehouse(warehouseStorage.get(0).get("maxSpace").asInt());
   }
 
   /**
@@ -63,7 +75,7 @@ public class PizzaTime {
   }
 
   /**
-   * Starts thead that generate orders.
+   * Starts thead that generates orders.
    */
   private void createOrders() {
     new Thread(new Order(1)).start();
@@ -78,9 +90,10 @@ public class PizzaTime {
    * @throws IOException if there is no file or file cannot be read.
    */
   public static void main(String[] args) throws IOException {
+    File file = new File("stuff.json");
     PizzaTime pizzaTime = new PizzaTime();
     pizzaTime.createOrders();
-    pizzaTime.read();
+    pizzaTime.read(file);
     pizzaTime.startThreads(pizzaTime.bakers, pizzaTime.deliverys);
     long t = System.currentTimeMillis();
     long end = t + 15000;
@@ -88,5 +101,8 @@ public class PizzaTime {
       stop = false;
     }
     stop = true;
+    System.out.println("=============================================");
+    System.out.println("No more orders will be taken.");
+    System.out.println("=============================================");
   }
 }

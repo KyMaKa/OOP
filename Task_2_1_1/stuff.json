@@ -21,17 +21,7 @@
     {
       "name":"delivery1",
       "experience":"1",
-      "storage":"1"
-    },
-    {
-      "name":"delivery2",
-      "experience":"2",
-      "storage":"2"
-    },
-    {
-      "name":"delivery3",
-      "experience":"3",
-      "storage":"3"
+      "storage":"5"
     }
   ],
   "Warehouse": [
