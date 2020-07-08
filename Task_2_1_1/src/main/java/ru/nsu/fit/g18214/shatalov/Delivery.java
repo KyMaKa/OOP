@@ -1,7 +1,6 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import static java.lang.Thread.sleep;
-import static ru.nsu.fit.g18214.shatalov.PizzaTime.storage;
 import static ru.nsu.fit.g18214.shatalov.PizzaTime.warehouse;
 
 import java.util.ArrayList;
@@ -79,7 +78,7 @@ public class Delivery implements Runnable {
           PizzaTime.buttonD = true;
           int taken = 0;
           System.out.println("Delivery guy " + this.name + " pushed button");
-          if (PizzaTime.stop && storage.isEmpty()) {
+          if (PizzaTime.stop && Warehouse.storage.isEmpty()) {
             return;
           }
           while (this.carried != this.capacity) {

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Worker implements Runnable {
 
-  private final BlockingQueue<Order> takenOrdersQueue;
+  //private final BlockingQueue<Order> takenOrdersQueue;
   private final int efficiency;
   private boolean busy;
   private boolean ready = false;
@@ -23,7 +23,7 @@ public class Worker implements Runnable {
    * @param id - given worker id.
    */
   public Worker(int exp, int id) {
-    this.takenOrdersQueue = orders;
+    //this.takenOrdersQueue = orders; //PizzaTime.java blocking queue.
     this.efficiency = (exp ^ 2) / 2;
     this.busy = false;
     this.name = id;
@@ -44,7 +44,7 @@ public class Worker implements Runnable {
    */
   public void takeOrder() throws InterruptedException {
     this.busy = true;
-    this.order = takenOrdersQueue.poll(5000, TimeUnit.MILLISECONDS);
+    this.order = orders.poll(5000, TimeUnit.MILLISECONDS); //Orders - defined in PizzaTime.java queue.
   }
 
   public void orderReady() {
@@ -79,7 +79,7 @@ public class Worker implements Runnable {
         if (!isBusy() && !PizzaTime.buttonW) {
           PizzaTime.buttonW = true;
           System.out.println("Worker " + this.name + " pushed button");
-          if (PizzaTime.stop && takenOrdersQueue.isEmpty()) {
+          if (PizzaTime.stop && orders.isEmpty()) { //Orders - defined in PizzaTime.java queue.
             return;
           }
           takeOrder();

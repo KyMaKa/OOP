@@ -1,16 +1,17 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
 public class Warehouse {
   private int maxSpace;
   private int usedSpace = 0;
-  private BlockingQueue<Order> storage;
+  static BlockingQueue<Order> storage;
 
   public Warehouse(int max) {
     this.maxSpace = max;
-    this.storage = PizzaTime.storage;
+    this.storage = new LinkedBlockingDeque<>(max);
   }
 
   /**

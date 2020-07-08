@@ -11,27 +11,26 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class PizzaTime {
   static boolean stop = false;
   static BlockingDeque<Order> orders = new LinkedBlockingDeque<>();
-  static BlockingDeque<Order> storage;
+  /*BlockingDeque<Order> storage;*/
   static Warehouse warehouse;
   ArrayList<Worker> workersList = new ArrayList<>();
-  //ArrayList<Order> ordersList = new ArrayList<>();
   ArrayList<Delivery> deliveryList = new ArrayList<>();
 
   static boolean buttonW = false;
   static boolean buttonD = false;
 
   ObjectMapper mapper = new ObjectMapper();
-
-  JsonNode json;
   JsonNode bakers;
   JsonNode deliverys;
-
+  JsonNode warehouseSize;
   /**
    * Reads json file with information about stuff.
-   * Fills nodes with information from this file.
+   * Fills jsonNodes with information from this file.
    * @throws IOException if required json file "stuff.json" not found.
+   * @throws NullPointerException if file missing some required information.
    */
-  public void read(File file) throws IOException {
+  public void readAndFill(File file) throws IOException {
+    JsonNode json;
     json = mapper.readTree(file);
     bakers = json.get("Bakers");
     if (bakers == null) {
@@ -52,12 +51,10 @@ public class PizzaTime {
       deliveryList.add(delivery);
     }
 
-    JsonNode warehouseStorage = json.get("Warehouse");
-    if (warehouseStorage == null) {
+    warehouseSize = json.get("Warehouse");
+    if (warehouseSize == null) {
       throw new NullPointerException("No info about warehouse size in file");
     }
-    storage = new LinkedBlockingDeque<>(warehouseStorage.get(0).get("maxSpace").asInt());
-    warehouse = new Warehouse(warehouseStorage.get(0).get("maxSpace").asInt());
   }
 
   /**
@@ -81,6 +78,10 @@ public class PizzaTime {
     new Thread(new Order(1)).start();
   }
 
+  private void setWarehouse() {
+    warehouse = new Warehouse(warehouseSize.get(0).get("maxSpace").asInt());
+  }
+
   /**
    * Main method to start use all other methods.
    * Program stops after 15 seconds like PizzaTime shop work hours is ended.
@@ -92,8 +93,9 @@ public class PizzaTime {
   public static void main(String[] args) throws IOException {
     File file = new File("stuff.json");
     PizzaTime pizzaTime = new PizzaTime();
+    pizzaTime.setWarehouse();
     pizzaTime.createOrders();
-    pizzaTime.read(file);
+    pizzaTime.readAndFill(file);
     pizzaTime.startThreads(pizzaTime.bakers, pizzaTime.deliverys);
     long t = System.currentTimeMillis();
     long end = t + 15000;
