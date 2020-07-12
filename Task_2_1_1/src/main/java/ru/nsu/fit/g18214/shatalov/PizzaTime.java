@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+import ru.nsu.fit.g18214.shatalov.Delivery;
+import ru.nsu.fit.g18214.shatalov.Worker;
 
 public class PizzaTime {
   static boolean stop = false;
@@ -93,9 +95,9 @@ public class PizzaTime {
   public static void main(String[] args) throws IOException {
     File file = new File("stuff.json");
     PizzaTime pizzaTime = new PizzaTime();
-    pizzaTime.setWarehouse();
     pizzaTime.createOrders();
     pizzaTime.readAndFill(file);
+    pizzaTime.setWarehouse();
     pizzaTime.startThreads(pizzaTime.bakers, pizzaTime.deliverys);
     long t = System.currentTimeMillis();
     long end = t + 15000;
