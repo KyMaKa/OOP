@@ -7,30 +7,27 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Food {
-  double x;
-  double y;
-  Image food;
+  int x;
+  int y;
+  Sprite food;
 
-  public Food(double x, double y) {
+  public Food(int x, int y) throws FileNotFoundException {
     this.x = x;
     this.y = y;
-    try {
-      this.food = new Image(new FileInputStream(
-          "src/resources/food.png"
-      ));
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+
+    this.food = new Sprite();
+    food.setPosition(x, y);
+    food.setImage("food.png");
   }
 
-  public Image getImage() {
+  public Sprite getSprite() {
     return this.food;
   }
 
-  public double getX() {
+  public int getX() {
     return this.x;
   }
-  public double getY() {
+  public int getY() {
     return this.y;
   }
 }

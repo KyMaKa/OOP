@@ -1,6 +1,7 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import javafx.application.Application;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -27,8 +28,9 @@ public class GameLoop extends Application {
   }
 
   @Override
-  public void start(Stage primaryStage) {
-
+  public void start(Stage primaryStage) throws FileNotFoundException {
+    Grid grid = new Grid(512, 512);
+    Snake snake = new Snake(grid.getCols() / 2, grid.getRows() / 2, grid);
     ArrayList<Food> foods = new ArrayList<>();
 
     primaryStage.setTitle("Snake The Game");
@@ -39,6 +41,11 @@ public class GameLoop extends Application {
 
     Canvas canvas = new Canvas(512, 512);
     root.getChildren().add(canvas);
+    canvas.setOnKeyPressed((new EventHandler<KeyEvent>() {
+      public void handle(KeyEvent keyEvent) {
+
+      }
+    }));
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -46,7 +53,7 @@ public class GameLoop extends Application {
     gameLoop.setCycleCount(Timeline.INDEFINITE);
     Random r = new Random();
     for (int i = 0; i < 5; i++) {
-      foods.add(new Food(512 * r.nextDouble(), 512 * r.nextDouble()));
+      foods.add(new Food(r.nextInt(grid.getCols()) * Grid.size, r.nextInt(grid.getRows()) * Grid.size));
     }
 
     final long timeStart = System.currentTimeMillis();
@@ -59,8 +66,7 @@ public class GameLoop extends Application {
 
             for (int i = 0; i < 5; i++) {
               //Image food = foods.get(i).getImage();
-              gc.drawImage(
-                  foods.get(i).getImage(), foods.get(i).getX(), foods.get(i).getY());
+              foods.get(i).getSprite().render(gc);
             }
           }
         });
