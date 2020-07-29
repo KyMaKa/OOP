@@ -1,5 +1,6 @@
 package ru.nsu.fit.g18214.shatalov;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -70,8 +71,14 @@ public class MainMenu extends Application {
     playButton.setOnMouseClicked((new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
-        primaryStage.setScene(new Scene(GameScene.getGroup(), 600, 300));
-        primaryStage.show();
+        //primaryStage.setScene(new Scene(GameScene.getGroup(), 600, 300));
+        GameLoop gl = new GameLoop();
+        try {
+          gl.start(primaryStage);
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+        //primaryStage.show();
       }
     }));
 

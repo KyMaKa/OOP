@@ -29,6 +29,7 @@ public class GameLoop extends Application {
 
   @Override
   public void start(Stage primaryStage) throws FileNotFoundException {
+    ArrayList<String> input = new ArrayList<>();
     Grid grid = new Grid(512, 512);
     Snake snake = new Snake(grid.getCols() / 2, grid.getRows() / 2, grid);
     ArrayList<Food> foods = new ArrayList<>();
@@ -36,43 +37,99 @@ public class GameLoop extends Application {
     primaryStage.setTitle("Snake The Game");
 
     Group root = new Group();
-    Scene theScene = new Scene(root);
-    primaryStage.setScene(theScene);
 
     Canvas canvas = new Canvas(512, 512);
-    root.getChildren().add(canvas);
-    canvas.setOnKeyPressed((new EventHandler<KeyEvent>() {
-      public void handle(KeyEvent keyEvent) {
+    GraphicsContext gc = canvas.getGraphicsContext2D();
 
+    root.getChildren().add(canvas);
+    Scene theScene = new Scene(root);
+    primaryStage.setResizable(false);
+    primaryStage.setScene(theScene);
+    primaryStage.show();
+
+    theScene.setOnKeyPressed((new EventHandler<KeyEvent>() {
+          public void handle(KeyEvent keyEvent) {
+        /*String code = keyEvent.getCode().toString();
+        if (!input.contains(code)) {
+          input.add(code);
+        }
       }
     }));
 
-    GraphicsContext gc = canvas.getGraphicsContext2D();
+    theScene.setOnKeyReleased(
+        new EventHandler<KeyEvent>() {
+          public void handle(KeyEvent e) {
+            String code = e.getCode().toString();
+            input.remove(code);
+          }
+        }
+    );*/
+            switch (keyEvent.getCode()) {
+              case UP:
+                snake.dirUp();
+                break;
+              case DOWN:
+                snake.dirDown();
+                break;
+              case LEFT:
+                snake.dirLeft();
+                break;
+              case RIGHT:
+                snake.dirRight();
+                break;
+            }
+          }
+        }));
+
 
     Timeline gameLoop = new Timeline();
     gameLoop.setCycleCount(Timeline.INDEFINITE);
     Random r = new Random();
     for (int i = 0; i < 5; i++) {
-      foods.add(new Food(r.nextInt(grid.getCols()) * Grid.size, r.nextInt(grid.getRows()) * Grid.size));
+      foods.add(new Food(r.nextInt(grid.getCols()), r.nextInt(grid.getRows())));
     }
 
-    final long timeStart = System.currentTimeMillis();
 
     KeyFrame kf = new KeyFrame(
-        Duration.seconds(0.017),
+        Duration.seconds(0.05),
         new EventHandler<ActionEvent>() {
           public void handle(ActionEvent actionEvent) {
-            gc.clearRect(0, 0, 512, 512);
+            //gc.clearRect(0, 0, 512, 512);
+            boolean trigger = false;
+            gc.setFill(Grid.COLOR);
+            gc.fillRect(0, 0, 512, 512);
+            gc.setFill(Food.COLOR);
 
-            for (int i = 0; i < 5; i++) {
-              //Image food = foods.get(i).getImage();
-              foods.get(i).getSprite().render(gc);
+            foods.forEach(food -> food.getSprite().render(gc));
+            /*if (input.contains("UP")) {
+              snake.dirUp();
             }
+            if (input.contains("DOWN")) {
+              snake.dirDown();
+            }
+            if (input.contains("RIGHT")) {
+              snake.dirRight();
+            }
+            if (input.contains("LEFT")) {
+              snake.dirLeft();
+            }*/
+            for (int i = 0; i < 5; i++) {
+              if (foods.get(i).getSprite().intersects(snake.getHead())) {
+                snake.grow(snake.getHead().positionX + snake.getxVelocity(),
+                    snake.getHead().positionY + snake.getyVelocity());
+                foods.get(i).getSprite().setPosition(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
+
+              }
+            }
+
+            snake.move();
+            gc.setFill(Snake.COLOR);
+            snake.tail.forEach(sprite -> sprite.render(gc));
+
           }
         });
 
     gameLoop.getKeyFrames().add(kf);
-    primaryStage.show();
     gameLoop.play();
 
   }

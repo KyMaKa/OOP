@@ -1,8 +1,12 @@
 package ru.nsu.fit.g18214.shatalov;
 
+import javafx.scene.paint.Color;
+
 import java.util.LinkedList;
 
 public class Snake {
+  public static final Color COLOR = Color.CORNSILK;
+  public static final Color DEAD = Color.RED;
   private int length;
   private Sprite head;
   private int xVelocity;
@@ -13,14 +17,15 @@ public class Snake {
   public Snake(int x, int y, Grid grid) {
     this.grid = grid;
     xVelocity = 0;
-    yVelocity = 0;
+    yVelocity = -1;
     this.length = 1;
     tail = new LinkedList<>();
     head = new Sprite();
+    head.setPosition(x,y);
     tail.add(head);
   }
 
-  private void grow(int x, int y) {
+  public void grow(int x, int y) {
     length++;
     add(x,y);
   }
@@ -35,32 +40,44 @@ public class Snake {
     }
   }
 
-  private void move() {
-    add(head.positionX + xVelocity, head.positionY + yVelocity);
+  public int getxVelocity() {
+    return this.xVelocity;
+  }
+
+  public int getyVelocity() {
+    return this.yVelocity;
+  }
+
+  public void move() {
+    add(head.positionX + this.xVelocity, head.positionY + this.yVelocity);
     tail.remove(0);
+  }
+
+  public Sprite getHead() {
+    return head;
   }
 
   public void dirUp() {
     if (yVelocity == 1 && length > 1) return;
-    xVelocity = 0;
-    yVelocity = -1;
+    this.xVelocity = 0;
+    this.yVelocity = -1;
   }
 
   public void dirDown() {
     if (yVelocity == -1 && length > 1) return;
-    xVelocity = 0;
-    yVelocity = 1;
+    this.xVelocity = 0;
+    this.yVelocity = 1;
   }
 
   public void dirLeft() {
     if (xVelocity == 1 && length > 1) return;
-    xVelocity = -1;
-    yVelocity = 0;
+    this.xVelocity = -1;
+    this.yVelocity = 0;
   }
 
   public void dirRight() {
     if (xVelocity == -1 && length > 1) return;
-    xVelocity = 1;
-    yVelocity = 0;
+    this.xVelocity = 1;
+    this.yVelocity = 0;
   }
 }

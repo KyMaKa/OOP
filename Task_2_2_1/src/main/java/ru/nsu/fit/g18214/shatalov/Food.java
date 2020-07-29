@@ -2,6 +2,7 @@ package ru.nsu.fit.g18214.shatalov;
 
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ public class Food {
   int x;
   int y;
   Sprite food;
+  public static final Color COLOR = Color.ROSYBROWN;
 
   public Food(int x, int y) throws FileNotFoundException {
     this.x = x;
@@ -17,7 +19,7 @@ public class Food {
 
     this.food = new Sprite();
     food.setPosition(x, y);
-    food.setImage("food.png");
+    //food.setImage("food.png");
   }
 
   public Sprite getSprite() {
