@@ -111,7 +111,6 @@ public class GameScene extends Application {
 
           gc.setFill(Wall.COLOR);
           walls.forEach(wall -> wall.getSpriteS().render(gc));
-          walls.forEach(wall -> wall.getSpriteE().render(gc));
           wallsInBetween.forEach(wall -> wall.getSpriteS().render(gc));
           gc.setFill(Food.COLOR);
           foods.forEach(food -> food.getSprite().render(gc));
@@ -177,8 +176,7 @@ public class GameScene extends Application {
       GraphicsContext gce = escapeMenu.getGraphicsContext2D();
       gce.setFill(Color.GREENYELLOW);
       gce.fillRect(206, 206, 100, 100);
-    }
-    else {
+    } else {
       gameLoop.play();
       root.getChildren().remove(escapeMenu);
       root.getChildren().remove(playButton);
@@ -189,34 +187,51 @@ public class GameScene extends Application {
   private void createWall() {
     Random r = new Random();
     for (int i = 0; i < 10; i++) {
-      Wall wall = new Wall();
-      wall.setStart(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
+      Wall wall = new Wall(
+          r.nextInt(grid.getCols()),
+          r.nextInt(grid.getRows()),
+          r.nextInt(2),
+          r.ints(1,10).findFirst().getAsInt()
+      );
 
-      int dir = r.nextInt(2);
+      boolean intersect = false;
+      if (wall.getDir() == 0) {   // 0 = vertical
+        for (int j = 1; j <= wall.getLength(); j++) {
+          Wall wallB = new Wall(wall.startX(), wall.startY() + j, wall.getDir(), 0);
 
-      if (dir == 0) {   // 0 = vertical
-        wall.setEnd(wall.startX(), r.ints(wall.startY(), grid.getRows()).findFirst().getAsInt());
+          if (i != 1) {
+            for (int tmp = i; tmp > 1; tmp--) {
+              Wall wallc = walls.get(tmp - 2);
+
+              if (wallB.getSpriteS().intersects(wallc.getSpriteS())) {
+                wallc.changeLength(j - 1);
+                intersect = true;
+                break;
+
+              } else {
+                for (int tmp2 = wallc.getLength(); tmp2 > 0; tmp2--) {
+                  if (wallB.getSpriteS().intersects(wallc.getWalls().get(tmp2 - 1).getSpriteS())) {
+                    wallc.changeLength(tmp2 - 1);
+                    intersect = true;
+                    break;
+                  }
+                }
+              }
+              if (!intersect) {
+                wall.getWalls().add(wallB);
+              }
+            }
+          } else {
+            wall.getWalls().add(wallB);
+          }
+        }/*else {
+        for (int j = 1; j <= wall.getLength(); j++) {
+          Wall wallB = new Wall(wall.startX() + j, wall.startY(), 1);
+          wallsInBetween.add(wallB);
+        }
+      }*/
       }
-      else {
-        wall.setEnd(r.ints(wall.startX(), grid.getCols()).findFirst().getAsInt(), wall.startY());
-      }
-
       walls.add(wall);
-
-      if (wall.startX() == wall.endX()) {
-        for (int j = 1; j <= wall.getLength(); j++) {
-          Wall wallB = new Wall();
-          wallB.setStart(wall.startX(), wall.startY() + j);
-          wallsInBetween.add(wallB);
-        }
-      }
-      else {
-        for (int j = 1; j <= wall.getLength(); j++) {
-          Wall wallB = new Wall();
-          wallB.setStart(wall.startX() + j, wall.startY());
-          wallsInBetween.add(wallB);
-        }
-      }
     }
   }
 }
