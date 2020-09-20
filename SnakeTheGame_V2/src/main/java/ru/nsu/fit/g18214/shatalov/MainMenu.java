@@ -1,18 +1,10 @@
 package ru.nsu.fit.g18214.shatalov;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -55,27 +47,18 @@ public class MainMenu extends Application {
     Scene scene = new Scene(root, 600, 300);
 
     //ACTIONS
-    startButton.setOnMouseClicked((new EventHandler<MouseEvent>() {
-      public void handle(MouseEvent event) {
-        primaryStage.setScene(new Scene(menu, 600, 300));
-        primaryStage.show();
-      }
+    startButton.setOnMouseClicked((event -> {
+      primaryStage.setScene(new Scene(menu, 600, 300));
+      primaryStage.show();
+
     }));
 
-    exitButton.setOnMouseClicked((new EventHandler<MouseEvent>() {
-      public void handle(MouseEvent event) {
-        primaryStage.close();
-      }
-    }));
+    exitButton.setOnMouseClicked((event -> primaryStage.close()));
 
-    playButton.setOnMouseClicked((new EventHandler<MouseEvent>() {
-      @Override
-      public void handle(MouseEvent event) {
-        //primaryStage.setScene(new Scene(GameScene.getGroup(), 600, 300));
-        GameLoop gl = new GameLoop();
-        gl.start(primaryStage);
-        //primaryStage.show();
-      }
+    playButton.setOnMouseClicked((event -> {
+      GameScene gl = new GameScene();
+      gl.start(primaryStage);
+
     }));
 
     //WINDOW

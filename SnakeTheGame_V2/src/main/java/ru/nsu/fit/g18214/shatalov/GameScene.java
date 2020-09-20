@@ -1,25 +1,222 @@
 package ru.nsu.fit.g18214.shatalov;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
-public class GameScene {
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.util.Duration;
 
-  public static Group getGroup() {
-    Text snakeTask = new Text("Eat food!");
-    snakeTask.setFont(Font.font(null, FontWeight.BOLD, 15));
-    snakeTask.setFill(Color.BLACK);
-    snakeTask.setX(0);
-    snakeTask.setY(20);
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
-    Group gameScene = new Group(snakeTask);
-    return gameScene;
+public class GameScene extends Application {
+
+  Scene theScene;
+  Timeline gameLoop;
+  private Grid grid;
+  private Canvas escapeMenu;
+  private Button playButton;
+  private Button exitButton;
+  private Group root;
+  private Snake snake;
+  private GraphicsContext gc;
+  private LinkedList<Wall> wallsInBetween = new LinkedList<>();
+  private LinkedList<Wall> walls = new LinkedList<>();
+
+  public static void main(String[] args) {
+    launch(args);
   }
 
+  @Override
+  public void start(Stage primaryStage) {
+    ArrayList<String> input = new ArrayList<>();
+    grid = new Grid(512, 512);
+    snake = new Snake(grid.getCols() / 2, grid.getRows() / 2, grid);
+    ArrayList<Food> foods = new ArrayList<>();
 
+    primaryStage.setTitle("Snake The Game");
+
+    root = new Group();
+
+    Canvas canvas = new Canvas(512, 512);
+    gc = canvas.getGraphicsContext2D();
+
+    root.getChildren().add(canvas);
+    theScene = new Scene(root);
+    primaryStage.setResizable(false);
+    primaryStage.setScene(theScene);
+    primaryStage.show();
+    escapeMenu = new Canvas(512, 512);
+
+    playButton = new Button("Play");
+    playButton.setLayoutX(240);
+    playButton.setLayoutY(210);
+
+    exitButton = new Button("Exit");
+    exitButton.setLayoutX(240);
+    exitButton.setLayoutY(256);
+
+    playButton.setOnMouseClicked((event -> esMenu()));
+    exitButton.setOnMouseClicked((event -> {
+      MainMenu mainMenu = new MainMenu();
+      try {
+        mainMenu.start(primaryStage);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }));
+    theScene.setOnKeyPressed((keyEvent -> {
+      switch (keyEvent.getCode()) {
+        case UP:
+          snake.dirUp();
+          break;
+        case DOWN:
+          snake.dirDown();
+          break;
+        case LEFT:
+          snake.dirLeft();
+          break;
+        case RIGHT:
+          snake.dirRight();
+          break;
+        case ESCAPE:
+          esMenu();
+      }
+    }));
+
+
+    gameLoop = new Timeline();
+    gameLoop.setCycleCount(Timeline.INDEFINITE);
+    Random r = new Random();
+    for (int i = 0; i < 5; i++) {
+      foods.add(new Food(r.nextInt(grid.getCols()), r.nextInt(grid.getRows())));
+    }
+    createWall();
+
+
+    KeyFrame kf = new KeyFrame(
+        Duration.seconds(0.05),
+        actionEvent -> {
+          gc.setFill(Grid.COLOR);
+          gc.fillRect(0, 0, 512, 512);
+
+          gc.setFill(Wall.COLOR);
+          walls.forEach(wall -> wall.getSpriteS().render(gc));
+          walls.forEach(wall -> wall.getSpriteE().render(gc));
+          wallsInBetween.forEach(wall -> wall.getSpriteS().render(gc));
+          gc.setFill(Food.COLOR);
+          foods.forEach(food -> food.getSprite().render(gc));
+
+          for (int i = 0; i < 5; i++) {
+            if (foods.get(i).getSprite().intersects(snake.getHead())) {
+              snake.grow(snake.getHead().positionX + snake.getxVelocity(),
+                  snake.getHead().positionY + snake.getyVelocity());
+              foods.get(i).getSprite().setPosition(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
+
+            }
+          }
+
+          snake.tail.forEach((snakeTail) -> {
+            if (snake.getHead().intersects(snakeTail) && snake.getHead() != snakeTail) {
+              snakeDead(primaryStage);
+            }
+          });
+
+          if (!snake.isDead()) {
+            snake.move();
+            gc.setFill(Snake.COLOR);
+            snake.tail.forEach(sprite -> sprite.render(gc));
+          }
+        });
+
+    gameLoop.getKeyFrames().add(kf);
+    gameLoop.play();
+
+  }
+
+  private void snakeDead(Stage stage) {
+    gameLoop.stop();
+    gc.setFill(Snake.COLOR);
+    snake.tail.forEach(sprite -> sprite.render(gc));
+    gc.setFill(Snake.DEAD);
+    snake.getHead().render(gc);
+    snake.snakeDied();
+    Button restart = new Button("Restart");
+    restart.setLayoutX(240);
+    restart.setLayoutY(210);
+
+    root.getChildren().add(escapeMenu);
+    root.getChildren().add(restart);
+    root.getChildren().add(exitButton);
+
+    restart.setOnMouseClicked(event -> {
+      GameScene gameScene = new GameScene();
+      gameScene.start(stage);
+    });
+
+    GraphicsContext gce = escapeMenu.getGraphicsContext2D();
+    gce.setFill(Color.GREENYELLOW);
+    gce.fillRect(206, 206, 100, 100);
+  }
+
+  private void esMenu() {
+    if (gameLoop.getStatus() == Animation.Status.RUNNING) {
+      gameLoop.stop();
+      root.getChildren().add(escapeMenu);
+      root.getChildren().add(playButton);
+      root.getChildren().add(exitButton);
+      GraphicsContext gce = escapeMenu.getGraphicsContext2D();
+      gce.setFill(Color.GREENYELLOW);
+      gce.fillRect(206, 206, 100, 100);
+    }
+    else {
+      gameLoop.play();
+      root.getChildren().remove(escapeMenu);
+      root.getChildren().remove(playButton);
+      root.getChildren().remove(exitButton);
+    }
+  }
+
+  private void createWall() {
+    Random r = new Random();
+    for (int i = 0; i < 10; i++) {
+      Wall wall = new Wall();
+      wall.setStart(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
+
+      int dir = r.nextInt(2);
+
+      if (dir == 0) {   // 0 = vertical
+        wall.setEnd(wall.startX(), r.ints(wall.startY(), grid.getRows()).findFirst().getAsInt());
+      }
+      else {
+        wall.setEnd(r.ints(wall.startX(), grid.getCols()).findFirst().getAsInt(), wall.startY());
+      }
+
+      walls.add(wall);
+
+      if (wall.startX() == wall.endX()) {
+        for (int j = 1; j <= wall.getLength(); j++) {
+          Wall wallB = new Wall();
+          wallB.setStart(wall.startX(), wall.startY() + j);
+          wallsInBetween.add(wallB);
+        }
+      }
+      else {
+        for (int j = 1; j <= wall.getLength(); j++) {
+          Wall wallB = new Wall();
+          wallB.setStart(wall.startX() + j, wall.startY());
+          wallsInBetween.add(wallB);
+        }
+      }
+    }
+  }
 }

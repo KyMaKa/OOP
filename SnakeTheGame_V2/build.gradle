@@ -12,12 +12,17 @@ repositories {
 
 javafx {
     version = "11.0.2"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.base', 'javafx.graphics' ]
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     // https://mvnrepository.com/artifact/org.openjfx/javafx-controls
     compile group: 'org.openjfx', name: 'javafx-controls', version: '11.0.2'
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-graphics
+    compile group: 'org.openjfx', name: 'javafx-graphics', version: '11.0.2'
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-base
+    compile group: 'org.openjfx', name: 'javafx-base', version: '11.0.2'
+
 
 }
