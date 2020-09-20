@@ -17,7 +17,7 @@ public class Wall {
     this.x = x1;
     this.y = y2;
     this.dir = dir;
-    if (dir == 0 && this.y + length <= 512/10) {
+    if (dir == 0 && (this.y + length <= 512/10)) {
       this.length = length;
     } else {
       if (dir == 0) {
@@ -50,7 +50,7 @@ public class Wall {
   }
 
   public Sprite getSpriteS() {
-    return wall;
+    return this.wall;
   }
 
   public int getLength() {
@@ -70,6 +70,6 @@ public class Wall {
   }
 
   public LinkedList<Wall> getWalls() {
-    return wallsInBetween;
+    return this.wallsInBetween;
   }
 }
