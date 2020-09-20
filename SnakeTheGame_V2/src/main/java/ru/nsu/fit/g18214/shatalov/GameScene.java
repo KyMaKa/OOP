@@ -111,7 +111,9 @@ public class GameScene extends Application {
 
           gc.setFill(Wall.COLOR);
           walls.forEach(wall -> wall.getSpriteS().render(gc));
-          wallsInBetween.forEach(wall -> wall.getSpriteS().render(gc));
+          walls.forEach(wall ->
+              wall.getWalls().forEach(swalls ->
+                  swalls.getSpriteS().render(gc)));
           gc.setFill(Food.COLOR);
           foods.forEach(food -> food.getSprite().render(gc));
 
@@ -209,7 +211,7 @@ public class GameScene extends Application {
                 break;
 
               } else {
-                for (int tmp2 = wallc.getLength(); tmp2 > 0; tmp2--) {
+                for (int tmp2 = wallc.getWalls().size(); tmp2 > 0; tmp2--) {
                   if (wallB.getSpriteS().intersects(wallc.getWalls().get(tmp2 - 1).getSpriteS())) {
                     wallc.changeLength(tmp2 - 1);
                     intersect = true;
@@ -218,11 +220,11 @@ public class GameScene extends Application {
                 }
               }
               if (!intersect) {
-                wall.getWalls().add(wallB);
+                wall.addWall(wallB);
               }
             }
           } else {
-            wall.getWalls().add(wallB);
+            wall.addWall(wallB);
           }
         }/*else {
         for (int j = 1; j <= wall.getLength(); j++) {
