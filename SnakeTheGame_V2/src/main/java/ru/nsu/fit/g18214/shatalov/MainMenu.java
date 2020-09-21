@@ -17,38 +17,38 @@ public class MainMenu extends Application {
 
     //BUTTONS
     Button playButton = new Button("Play");
-    playButton.setLayoutX(300);
-    playButton.setLayoutY(200);
+    playButton.setLayoutX(240);
+    playButton.setLayoutY(256);
 
     Button startButton = new Button("Start");
-    startButton.setLayoutX(300);
-    startButton.setLayoutY(100);
+    startButton.setLayoutX(240);
+    startButton.setLayoutY(210);
 
     Button exitButton = new Button("Exit");
-    exitButton.setLayoutX(300);
-    exitButton.setLayoutY(250);
+    exitButton.setLayoutX(240);
+    exitButton.setLayoutY(300);
 
     //TEXT
     Text menuTitle = new Text("Snake The Game");
     menuTitle.setFont(Font.font(null, FontWeight.BOLD, 20));
     menuTitle.setFill(Color.GREEN);
-    menuTitle.setX(210);
-    menuTitle.setY(50);
+    menuTitle.setX(190);
+    menuTitle.setY(20);
 
     Text menuMain = new Text("Main menu");
     menuMain.setFont(Font.font(null, FontWeight.BOLD, 15));
     menuMain.setFill(Color.BLACK);
-    menuMain.setX(260);
-    menuMain.setY(100);
+    menuMain.setX(220);
+    menuMain.setY(50);
 
     //GROUPS AND SCENES
     Group root = new Group(startButton);
     Group menu = new Group(menuMain, menuTitle, playButton, exitButton);
-    Scene scene = new Scene(root, 600, 300);
+    Scene scene = new Scene(root, 512, 512);
 
     //ACTIONS
     startButton.setOnMouseClicked((event -> {
-      primaryStage.setScene(new Scene(menu, 600, 300));
+      primaryStage.setScene(new Scene(menu, 512, 512));
       primaryStage.show();
 
     }));
@@ -62,6 +62,7 @@ public class MainMenu extends Application {
     }));
 
     //WINDOW
+    primaryStage.setResizable(false);
     primaryStage.setTitle("SnakeTheGame");
     primaryStage.setScene(scene);
     primaryStage.show();
