@@ -29,7 +29,8 @@ public class Sprite {
   }
 
   public Rectangle2D getBoundary() {
-    return new Rectangle2D(this.positionX * Grid.size, this.positionY * Grid.size, Grid.size, Grid.size);
+    return new Rectangle2D(this.positionX * Grid.size,
+        this.positionY * Grid.size, Grid.size, Grid.size);
   }
 
   public boolean intersects(Sprite s) {

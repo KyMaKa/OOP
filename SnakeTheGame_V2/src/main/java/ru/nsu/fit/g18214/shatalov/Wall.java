@@ -8,7 +8,7 @@ public class Wall {
   int x;
   int y;
   int length;
-  int dir;
+  int dir; // 0 = vertical, 1 = horizontal
   Sprite wall;
   LinkedList<Wall> wallsInBetween = new LinkedList<>();
   public static final Color COLOR = Color.GRAY;
