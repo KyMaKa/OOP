@@ -107,6 +107,7 @@ public class GameScene extends Application {
       }
     }
 
+    long time = System.currentTimeMillis();
 
     KeyFrame kf = new KeyFrame(
         Duration.seconds(0.05),
@@ -140,16 +141,18 @@ public class GameScene extends Application {
             }
           });
 
-          walls.forEach((walls) -> {
-            if (walls.getSpriteS().intersects(snake.getHead())) {
-              snakeDead(primaryStage);
-            }
-            walls.getWalls().forEach(walls1 -> {
-              if (walls1.getSpriteS().intersects(snake.getHead())) {
+          if (System.currentTimeMillis() > time + 3000) {
+            walls.forEach((walls) -> {
+              if (walls.getSpriteS().intersects(snake.getHead())) {
                 snakeDead(primaryStage);
               }
+              walls.getWalls().forEach(walls1 -> {
+                if (walls1.getSpriteS().intersects(snake.getHead())) {
+                  snakeDead(primaryStage);
+                }
+              });
             });
-          });
+          }
 
           if (!snake.isDead()) {
             snake.move();
