@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="243dp"
+        android:layout_height="78dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/currencyChar"
+            android:layout_width="128dp"
+            android:layout_height="39dp"
+            android:text="CharCode"
+            android:textAllCaps="true"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/currencyName"
+            android:layout_width="243dp"
+            android:layout_height="38dp"
+            android:text="name" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/currencyValue"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_weight="1"
+        android:text="Value"
+        android:textSize="24sp" />
+
+</LinearLayout>
