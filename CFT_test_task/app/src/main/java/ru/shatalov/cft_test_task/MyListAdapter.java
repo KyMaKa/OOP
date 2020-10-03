@@ -24,10 +24,12 @@ public class MyListAdapter extends ArrayAdapter<String> {
     TextView titleChar = rowView.findViewById(R.id.currencyChar);
     TextView titleName =  rowView.findViewById(R.id.currencyName);
     TextView titleValue = rowView.findViewById(R.id.currencyValue);
+    TextView titleNominal = rowView.findViewById(R.id.currencyNominal);
 
     titleChar.setText(currencies[position].getCharCode());
     titleName.setText(currencies[position].getName());
     titleValue.setText(currencies[position].getValue() + "");
+    titleNominal.setText("x" + currencies[position].getNominal());
 
     return rowView;
   }
