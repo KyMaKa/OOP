@@ -12,6 +12,9 @@ public class MyListAdapter extends ArrayAdapter<String> {
   private final Activity context;
   private final Currency[] currencies;
 
+  /**
+   * Creates custom adapter for ListView.
+   */
   public MyListAdapter(Activity context, Currency[] currencies, String[] currencyChar) {
     super(context, R.layout.mylist, currencyChar);
     this.context = context;

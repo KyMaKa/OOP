@@ -69,8 +69,8 @@
 
     <Button
         android:id="@+id/convertButton"
-        android:layout_width="65dp"
-        android:layout_height="42dp"
+        android:layout_width="67dp"
+        android:layout_height="44dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"

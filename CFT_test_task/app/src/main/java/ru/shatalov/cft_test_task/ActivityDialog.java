@@ -13,6 +13,10 @@ public class ActivityDialog extends AppCompatActivity {
   EditText valueRight;
   TextView valueLeft;
 
+  /**
+   * Creates activity as dialog window where ->
+   * -> user can convert currency from RUB to selected previously in list.
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -21,7 +25,6 @@ public class ActivityDialog extends AppCompatActivity {
     valueRight = findViewById(R.id.valueRight);
     valueLeft = findViewById(R.id.valueLeft);
     valueRight.setInputType(InputType.TYPE_CLASS_NUMBER);
-    //valueLeft.setInputType(InputType.TYPE_NULL);
 
     setTitle("  Conversion");
     Intent intent = getIntent();
@@ -53,6 +56,7 @@ public class ActivityDialog extends AppCompatActivity {
   private void calculateValue(int position) {
     System.out.println(valueRight.getText().toString());
     double vR = Double.parseDouble(valueRight.getText().toString());
-    valueLeft.setText(vR / (MainActivity.currencies[position].getValue() / MainActivity.currencies[position].getNominal()) + "");
+    valueLeft.setText(vR / (MainActivity.currencies[position].getValue()
+        / MainActivity.currencies[position].getNominal()) + "");
   }
 }

@@ -5,27 +5,31 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-  private TextView message;
   private String[] listItems;
   private ReadJson readJson;
   private Context context;
   protected static Currency[] currencies;
 
+
+  /**
+   * Creates first and main window of application.
+   * Calls method showCurrencies() that creates starts new thread ->
+   * -> to access daily_json.js file by URL.
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    message = findViewById(R.id.textView);
+    TextView message = findViewById(R.id.textView);
     message.setText("Name");
 
     try {
@@ -37,11 +41,14 @@ public class MainActivity extends AppCompatActivity {
     currencies = new Currency[readJson.currencies.size()];
     currencies = readJson.getCurrencies().toArray(currencies);
 
+
+    //Renders custom ListView
     MyListAdapter adapter = new MyListAdapter(this, currencies, listItems);
     ListView listView = findViewById(R.id.listView);
     listView.setAdapter(adapter);
     context = this;
 
+    //Registers tap on some list item and creates custom activity as dialog
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -52,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-
 
 
   private void showCurrencies() throws InterruptedException {
@@ -76,6 +82,5 @@ public class MainActivity extends AppCompatActivity {
     }
     listItems = new String[arrayList.size()];
     listItems = arrayList.toArray(listItems);
-    //message.setText("Currencies");
   }
 }

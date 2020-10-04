@@ -1,5 +1,7 @@
 package ru.shatalov.cft_test_task;
 
+//Используется jackson просто потому что я уже знаком с ним и использовал ранее.
+//Является одним из популярнейших инструментов для работы с JSON файлами.
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +19,11 @@ public class ReadJson implements ThreadFactory {
   private final ObjectMapper objectMapper = new ObjectMapper();
   protected ArrayList<Currency> currencies = new ArrayList<>();
 
+  /**
+   * Reads and stores info about each currency in Currency.class ->
+   * -> and creates list with this classes.
+   * @throws IOException if can't access source.
+   */
   protected void readCurrencyList() throws IOException {
     objectMapper.configure(
         DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -43,6 +50,7 @@ public class ReadJson implements ThreadFactory {
     return this.currencies;
   }
 
+  //Creates new thread.
   public Thread newThread(Runnable r) {
     Thread thread = new Thread(r);
     thread.setPriority(5);
