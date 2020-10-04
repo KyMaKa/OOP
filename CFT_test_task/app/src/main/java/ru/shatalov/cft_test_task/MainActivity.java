@@ -1,6 +1,11 @@
 package ru.shatalov.cft_test_task;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,16 +15,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-  //private TextView message;
+  private TextView message;
   private String[] listItems;
   private ReadJson readJson;
+  private Context context;
+  protected static Currency[] currencies;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    //message = findViewById(R.id.textView);
-
+    message = findViewById(R.id.textView);
+    message.setText("Name");
 
     try {
       showCurrencies();
@@ -27,13 +34,23 @@ public class MainActivity extends AppCompatActivity {
       e.printStackTrace();
     }
 
-    Currency[] currencies = new Currency[readJson.currencies.size()];
+    currencies = new Currency[readJson.currencies.size()];
     currencies = readJson.getCurrencies().toArray(currencies);
 
     MyListAdapter adapter = new MyListAdapter(this, currencies, listItems);
     ListView listView = findViewById(R.id.listView);
     listView.setAdapter(adapter);
+    context = this;
 
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent activityDialog = new Intent(context, ActivityDialog.class);
+        activityDialog.putExtra("position", position);
+        startActivity(activityDialog, savedInstanceState);
+
+      }
+    });
   }
 
 

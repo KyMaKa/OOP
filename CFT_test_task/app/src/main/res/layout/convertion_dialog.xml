@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false">
+
+    <TextView
+        android:id="@+id/valueLeft"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/switchCurrency"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
+
+    <EditText
+        android:id="@+id/valueRight"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/switchCurrency"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/currencyLeft"
+        android:layout_width="59dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/currencyLeft"
+        app:layout_constraintBottom_toTopOf="@+id/valueLeft"
+        app:layout_constraintEnd_toStartOf="@+id/switchCurrency" />
+
+    <TextView
+        android:id="@+id/currencyRight"
+        android:layout_width="59dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/currencyRight"
+        app:layout_constraintBottom_toTopOf="@+id/valueRight"
+        app:layout_constraintStart_toEndOf="@+id/switchCurrency" />
+
+    <ImageView
+        android:id="@+id/switchCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55"
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        android:contentDescription="TODO" />
+
+    <Button
+        android:id="@+id/convertButton"
+        android:layout_width="65dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Convert"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/switchCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/valueRight" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

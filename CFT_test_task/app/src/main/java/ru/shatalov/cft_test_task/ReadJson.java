@@ -1,7 +1,5 @@
 package ru.shatalov.cft_test_task;
 
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +16,6 @@ public class ReadJson implements ThreadFactory {
   final protected String source = "https://www.cbr-xml-daily.ru/daily_json.js";
   private final ObjectMapper objectMapper = new ObjectMapper();
   protected ArrayList<Currency> currencies = new ArrayList<>();
-  private static ReadJson readJson = new ReadJson();
 
   protected void readCurrencyList() throws IOException {
     objectMapper.configure(
@@ -44,10 +41,6 @@ public class ReadJson implements ThreadFactory {
 
   public ArrayList<Currency> getCurrencies() {
     return this.currencies;
-  }
-
-  public static ReadJson getInstance() {
-    return readJson;
   }
 
   public Thread newThread(Runnable r) {
