@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
   private Context context;
   protected static Currency[] currencies;
 
-
   /**
    * Creates first and main window of application.
    * Calls method showCurrencies() that creates starts new thread ->
