@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "e:\\Repository\\OOP\\SnakeTheGame_V2assembleSnakeTheGame_V2",
+			"script": "assemble",
+			"description": "Assembles the outputs of this project.",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"project": "SnakeTheGame_V2",
+			"buildFile": "E:\\Repository\\OOP\\SnakeTheGame_V2\\build.gradle",
+			"rootProject": "SnakeTheGame_V2",
+			"projectFolder": "e:\\Repository\\OOP\\SnakeTheGame_V2",
+			"workspaceFolder": "e:\\Repository\\OOP\\SnakeTheGame_V2",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: assemble"
+		}
+	]
+}
