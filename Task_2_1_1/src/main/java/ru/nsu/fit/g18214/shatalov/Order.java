@@ -24,7 +24,7 @@ public class Order implements Runnable {
       if (!PizzaTime.stop) {
         System.out.println("New order # " + this.id);
         PizzaTime.orders.put(this);
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         Order order = new Order(this.id + 1);
         new Thread(order).start();
       }

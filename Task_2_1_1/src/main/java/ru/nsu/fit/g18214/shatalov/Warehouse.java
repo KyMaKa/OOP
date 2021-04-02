@@ -40,6 +40,10 @@ public class Warehouse {
     return order;
   }
 
+  public boolean isEmoty() {
+    return this.storage.isEmpty();
+  }
+
   public boolean hasFreeSpace() {
     return this.maxSpace != this.usedSpace;
   }

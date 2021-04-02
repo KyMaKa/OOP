@@ -90,7 +90,7 @@ public class Delivery implements Runnable {
               System.out.println("Delivery guy " + this.name
                   + " took package number " + this.order.getId());
             } else {
-              if (PizzaTime.stop) {
+              if (PizzaTime.stop && warehouse.isEmoty()) {
                 break;
               }
             }
