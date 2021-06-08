@@ -1,5 +1,5 @@
 package ru.nsu.fit.g18214.shatalov;
-//Pull request purpose only
+
 import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.scene.control.Button;
