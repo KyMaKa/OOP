@@ -2,13 +2,8 @@ package ru.nsu.fit.g18214.shatalov;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Sprite {
-  private Image image;
   public int positionX;
   public int positionY;
 

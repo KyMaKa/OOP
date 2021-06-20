@@ -16,7 +16,6 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
 
 public class GameScene extends Application {
 
@@ -29,8 +28,8 @@ public class GameScene extends Application {
   private Group root;
   private Snake snake;
   private GraphicsContext gc;
-  private LinkedList<Wall> wallsInBetween = new LinkedList<>();
-  private LinkedList<Wall> walls = new LinkedList<>();
+
+  private final LinkedList<Wall> walls = new LinkedList<>();
 
   public static void main(String[] args) {
     launch(args);
@@ -38,7 +37,6 @@ public class GameScene extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    ArrayList<String> input = new ArrayList<>();
     grid = new Grid(512, 512);
     snake = new Snake(grid.getCols() / 2, grid.getRows() / 2, grid);
     ArrayList<Food> foods = new ArrayList<>();
@@ -96,16 +94,10 @@ public class GameScene extends Application {
 
     gameLoop = new Timeline();
     gameLoop.setCycleCount(Timeline.INDEFINITE);
-    Random r = new Random();
-    createWall();
-    for (int i = 0; i < 5; i++) {
-      Food food = new Food(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
-      if (checkCollisionWithWall(food)) {
-        --i;
-      } else {
-        foods.add(food);
-      }
-    }
+
+    Wall.createWall(grid, walls);
+
+    Food.createFood(grid, foods, walls);
 
     long time = System.currentTimeMillis();
 
@@ -124,40 +116,19 @@ public class GameScene extends Application {
           gc.setFill(Food.COLOR);
           foods.forEach(food -> food.getSprite().render(gc));
 
-          for (int i = 0; i < 5; i++) {
-            if (foods.get(i).getSprite().intersects(snake.getHead())) {
-              snake.grow(snake.getHead().positionX + snake.getxVelocity(),
-                  snake.getHead().positionY + snake.getyVelocity());
-              foods.get(i).getSprite().setPosition(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
-              while (checkCollisionWithWall(foods.get(i))) {
-                foods.get(i).getSprite().setPosition(r.nextInt(grid.getCols()), r.nextInt(grid.getRows()));
-              }
-            }
-          }
+          Food.checkIntersection(snake, foods, grid, walls);
 
-          snake.tail.forEach((snakeTail) -> {
-            if (snake.getHead().intersects(snakeTail) && snake.getHead() != snakeTail) {
-              snakeDead(primaryStage);
-            }
-          });
+          Snake.headCollusion(snake);
 
-          if (System.currentTimeMillis() > time + 3000) {
-            walls.forEach((walls) -> {
-              if (walls.getSpriteS().intersects(snake.getHead())) {
-                snakeDead(primaryStage);
-              }
-              walls.getWalls().forEach(walls1 -> {
-                if (walls1.getSpriteS().intersects(snake.getHead())) {
-                  snakeDead(primaryStage);
-                }
-              });
-            });
-          }
+
+          Wall.wallCollusionWithSnake(walls, snake, time);
 
           if (!snake.isDead()) {
             snake.move();
             gc.setFill(Snake.COLOR);
             snake.tail.forEach(sprite -> sprite.render(gc));
+          } else {
+            snakeDead(primaryStage);
           }
         });
 
@@ -206,64 +177,5 @@ public class GameScene extends Application {
       root.getChildren().remove(playButton);
       root.getChildren().remove(exitButton);
     }
-  }
-
-  private void createWall() { //in the way that walls don't cross each other
-    Random r = new Random();
-    for (int i = 0; i < 20; i++) {
-      Wall wall = new Wall(
-          r.nextInt(grid.getCols()),
-          r.nextInt(grid.getRows()),
-          r.nextInt(2),
-          r.ints(5, 10).findFirst().getAsInt()
-      );
-
-      boolean intersect = false;
-      for (int j = 1; j <= wall.getLength(); j++) {
-          Wall wallB;
-          if (wall.getDir() == 0) { // 0 = vertical
-            wallB = new Wall(wall.startX(), wall.startY() + j, wall.getDir(), 0);
-          } else {
-            wallB = new Wall(wall.startX() + j, wall.startY(), wall.getDir(), 0);
-          }
-          if (i != 0) {
-            for (int tmp = i; tmp > 1; tmp--) {
-              Wall wallc = walls.get(tmp - 1);
-
-              if (wallB.getSpriteS().intersects(wallc.getSpriteS())) {
-                wall.changeLength(j - 1);
-                intersect = true;
-                break;
-
-              } else {
-                for (int tmp2 = wallc.getWalls().size(); tmp2 > 0; tmp2--) {
-                  if (wallB.getSpriteS().intersects(wallc.getWalls().get(tmp2 - 1).getSpriteS())) {
-                    wall.changeLength(tmp2 - 1);
-                    intersect = true;
-                    break;
-                  }
-                }
-              }
-              if (!intersect) {
-                wall.addWall(wallB);
-              }
-            }
-          } else {
-            wall.addWall(wallB);
-          }
-        }
-      walls.add(wall);
-    }
-  }
-
-  private boolean checkCollisionWithWall(Food food) { //with walls
-    for (int i = 0; i < walls.size(); i++) {
-      for (int j = 0; j < walls.get(i).getWalls().size(); j++) {
-        if (walls.get(i).getWalls().get(j).getSpriteS().intersects(food.getSprite())) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 }

@@ -41,6 +41,14 @@ public class Snake {
     }
   }
 
+  public static void headCollusion(Snake snake) {
+    snake.tail.forEach((snakeTail) -> {
+      if (snake.getHead().intersects(snakeTail) && snake.getHead() != snakeTail) {
+        snake.snakeDied();
+      }
+    });
+  }
+
   public int getxVelocity() {
     return this.xVelocity;
   }
