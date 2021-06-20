@@ -2,7 +2,7 @@ package ru.nsu.fit.g18214.shatalov;
 
 import java.util.concurrent.Callable;
 
-public class App implements Callable {
+public class App {
 
     long n;
 
@@ -10,7 +10,7 @@ public class App implements Callable {
         this.n = n;
     }
 
-    public Object call() {
+    public static Boolean call(Integer n) {
         if (n <= 1) return false;
         if (n <= 3) return true;
 
@@ -24,5 +24,9 @@ public class App implements Callable {
             }
         }
         return true;
+    }
+
+    public static Boolean isNonPrime(Integer n) {
+        return !call(n);
     }
 }

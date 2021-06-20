@@ -5,8 +5,7 @@ package ru.nsu.fit.g18214.shatalov;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class AppTest {
@@ -50,15 +49,14 @@ public class AppTest {
     public void testParallel() throws ExecutionException, InterruptedException {
         ThreadFind threadFind = new ThreadFind();
         long end, start;
-        Integer[] arr = new Integer[8000];
-        Arrays.fill(arr, 1000000007);
-        Iterator<Integer> iterator = Arrays.stream(arr).iterator();
+        ArrayList<Integer> arr = new ArrayList<Integer>(Collections.nCopies(8000, 1000000007));
+        Iterator<Integer> iterator = arr.iterator();
         for (int j = 1; j <= 3; j++) {
             System.out.println("Run " + j + ":");
             for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
-                iterator = Arrays.stream(arr).iterator();
+                iterator = arr.iterator();
                 start = System.currentTimeMillis();
-                threadFind.findStream(iterator, i);
+                threadFind.findStream(iterator, i, arr);
                 end = System.currentTimeMillis();
                 System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 10000);
             }

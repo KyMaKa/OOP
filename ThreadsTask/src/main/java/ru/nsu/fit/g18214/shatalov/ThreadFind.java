@@ -1,10 +1,8 @@
 package ru.nsu.fit.g18214.shatalov;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.*;
-import java.util.stream.Stream;
 
 
 public class ThreadFind {
@@ -15,11 +13,11 @@ public class ThreadFind {
     ArrayList<Future> check = new ArrayList<>();
     while (iterator.hasNext()) {
       long num = iterator.next();
-      check.add(pool.submit(new App(num)));
+      check.add(CompletableFuture.supplyAsync(() -> App.isNonPrime((int) num), pool));
 
     }
     for (Future<Boolean> elem : check) {
-      if (!elem.get()) {
+      if (elem.get()) {
         System.out.println("True");
         pool.shutdown();
         return;
@@ -27,21 +25,21 @@ public class ThreadFind {
     }
   }
 
-  public void findStream(Iterator<Integer> iterator, int threads) throws ExecutionException, InterruptedException {
+  public void findStream(Iterator<Integer> iterator, int threads, ArrayList<Integer> arr) throws ExecutionException, InterruptedException {
 
     ForkJoinPool pool = new ForkJoinPool(threads);
     ArrayList<Future> check = new ArrayList<>();
-    while (iterator.hasNext()) {
-      long num = iterator.next();
+    //while (iterator.hasNext()) {
+     // long num = iterator.next();
 
-      check.add(pool.submit(new App(num)));
-    }
-    for (Future<Boolean> elem : check) {
+      /*check.add(pool.submit(() ->*/ arr.parallelStream().anyMatch(App::isNonPrime)/*))*/;
+    //}
+    /*for (Future<Boolean> elem : check) {
       if (!elem.get()) {
         System.out.println("True");
         pool.shutdown();
         return;
       }
-    }
+    }*/
   }
 }
