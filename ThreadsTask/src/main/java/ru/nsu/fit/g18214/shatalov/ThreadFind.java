@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 
 public class ThreadFind {
-  public void findThreadPool(Integer[] arr, Integer threads)
+  public void findThreadPool(Iterator<Integer> iterator, Integer threads)
       throws ExecutionException, InterruptedException {
 
     ExecutorService pool = Executors.newFixedThreadPool(threads);
     ArrayList<Future> check = new ArrayList<>();
-    for (long num : arr) {
+    while (iterator.hasNext()) {
+      long num = iterator.next();
       check.add(pool.submit(new App(num)));
 
     }
@@ -25,14 +27,13 @@ public class ThreadFind {
     }
   }
 
-  public void findStream(Integer[] arr, int threads) throws ExecutionException, InterruptedException {
+  public void findStream(Iterator<Integer> iterator, int threads) throws ExecutionException, InterruptedException {
 
-    Iterator<Integer> iter = Arrays.stream(arr).iterator();
     ForkJoinPool pool = new ForkJoinPool(threads);
     ArrayList<Future> check = new ArrayList<>();
-    Iterator<Future> iterF = check.iterator();
-    while (iter.hasNext()) {
-      long num = iter.next();
+    while (iterator.hasNext()) {
+      long num = iterator.next();
+
       check.add(pool.submit(new App(num)));
     }
     for (Future<Boolean> elem : check) {

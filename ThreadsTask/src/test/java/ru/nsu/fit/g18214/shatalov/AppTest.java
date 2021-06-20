@@ -6,6 +6,7 @@ package ru.nsu.fit.g18214.shatalov;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 public class AppTest {
@@ -15,11 +16,13 @@ public class AppTest {
         long end, start;
         Integer[] arr = new Integer[8000];
         Arrays.fill(arr, 1000000007);
+        Iterator<Integer> iterator = Arrays.stream(arr).iterator();
         for (int j = 1; j <= 3; j++) {
             System.out.println("Run " + j + ":");
             for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
+                iterator = Arrays.stream(arr).iterator();
                 start = System.currentTimeMillis();
-                threadFind.findThreadPool(arr, i);
+                threadFind.findThreadPool(iterator, i);
                 end = System.currentTimeMillis();
                 System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 10000);
             }
@@ -32,11 +35,12 @@ public class AppTest {
         long end, start;
         Integer[] arr = new Integer[8000];
         Arrays.fill(arr, 1000000007);
+        Iterator<Integer> iterator = Arrays.stream(arr).iterator();
         for (int j = 1; j <= 3; j++) {
             System.out.println("Run " + j + ":");
-
+            iterator = Arrays.stream(arr).iterator();
             start = System.currentTimeMillis();
-            threadFind.findThreadPool(arr, 1);
+            threadFind.findThreadPool(iterator, 1);
             end = System.currentTimeMillis();
             System.out.println("Time for " + 1 + " thread(s): " + ((double) end - start) / 10000);
         }
@@ -48,11 +52,13 @@ public class AppTest {
         long end, start;
         Integer[] arr = new Integer[8000];
         Arrays.fill(arr, 1000000007);
+        Iterator<Integer> iterator = Arrays.stream(arr).iterator();
         for (int j = 1; j <= 3; j++) {
             System.out.println("Run " + j + ":");
             for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
+                iterator = Arrays.stream(arr).iterator();
                 start = System.currentTimeMillis();
-                threadFind.findStream(arr, i);
+                threadFind.findStream(iterator, i);
                 end = System.currentTimeMillis();
                 System.out.println("Time for " + i + " thread(s): " + ((double) end - start) / 10000);
             }
